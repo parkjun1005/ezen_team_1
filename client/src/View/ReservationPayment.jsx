@@ -130,7 +130,6 @@ export default function ReservationPayment() {
     }
     return 0;
   };
-
   const nights = calculateNights();
   const productPrice = productDetails?.price || 0;
   const totalProductPrice = productPrice * nights;

@@ -3,13 +3,15 @@ import Modal from 'react-modal';
 import * as PortOne from '@portone/browser-sdk/v2';
 import { v4 as uuidv4 } from 'uuid';
 import MultiPayment from '../Component/MultiPayment';
+import { useNavigate } from 'react-router-dom';
+
 Modal.setAppElement('#root');
 
 const PaymentModal = ({ isOpen, onRequestClose, productDetails, productName, startDate, endDate, selectedOptions, peopleCount, totalPrice }) => {
+  const navigate = useNavigate(); // useNavigate 훅 사용
+  
   const { REACT_APP_PortOne_StoreId } = process.env;
   const { REACT_APP_PortOne_ChannelKey, REACT_APP_PortOne_Kakao_ChannelKey } = process.env;
-
-  console.log('PaymentModal rendered');
 
   const paymentMethods = [
     { paymentType: '카드 결제', channelKey: REACT_APP_PortOne_ChannelKey, payMethod: 'CARD', paymentName: '카드 결제' },
@@ -24,23 +26,19 @@ const PaymentModal = ({ isOpen, onRequestClose, productDetails, productName, sta
   const [checkboxes, setCheckboxes] = useState({ checkbox1: false, checkbox2: false, allChecked: false });
 
   const handleRadioChange = (paymentData) => {
-    console.log('Payment method selected:', paymentData);
     setSelectedPaymentMethod(paymentData);
     setRadioSelected(true);
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    console.log('Input changed:', { name, value });
     if (!name || value === undefined || value === null) {
       console.error('Invalid input name or value');
       return;
     }
     setPaymentPerson((prev) => ({ ...prev, [name]: value.trim() }));
   };
-
   const handleCheckboxChange = (name, isChecked) => {
-    console.log('Checkbox changed:', { name, isChecked });
     setCheckboxes((prev) => {
       const updatedCheckboxes = { ...prev, [name]: isChecked };
       if (name === 'allChecked') {
@@ -53,11 +51,38 @@ const PaymentModal = ({ isOpen, onRequestClose, productDetails, productName, sta
     });
   };
 
-  const SERVER_BASE_URL = 'http://localhost:8080'; // 서버의 URL을 여기에 명시
+  const SERVER_BASE_URL = 'http://localhost:8080';
 
   async function requestPayment() {
     const paymentId = `payment-${uuidv4()}`;
-    const { paymentType, channelKey, payMethod, paymentName } = selectedPaymentMethod;
+    const { paymentType, channelKey, payMethod } = selectedPaymentMethod;
+
+    try {
+      const payResponse = await PortOne.requestPayment({
+        storeId: REACT_APP_PortOne_StoreId,
+        paymentId,
+        channelKey,
+        orderName: productName,
+        currency: 'CURRENCY_KRW',
+        payMethod,
+        productType: 'PRODUCT_TYPE_REAL',
+        totalAmount: totalPrice,
+        ...(paymentType === '카카오 페이' && { easyPay: { easyPayProvider: 'KAKAOPAY' } }),
+      });
+
+      if (payResponse.code != null) {
+        alert(payResponse.message);
+        return;
+      }
+
+      sendPaymentDataToServer(paymentId);
+    } catch (error) {
+      console.error('Error during payment request:', error);
+      alert('결제 요청 중 오류가 발생했습니다.');
+    }
+  }
+
+  async function sendPaymentDataToServer(paymentId) {
     const date = new Date();
     const createOrderNumber =
       String(productDetails.productId) +
@@ -70,80 +95,49 @@ const PaymentModal = ({ isOpen, onRequestClose, productDetails, productName, sta
       "-" +
       String(productDetails.productId);
     const reservationDate = `${startDate.toLocaleString()}-${endDate.toLocaleString()}`;
-    let payResponse;
+  
+    const paymentData = Object.keys(selectedOptions).map((optionName) => ({
+      productId: productDetails.productId,
+      userId: 'testuser001',
+      reservationNumber: createOrderNumber,
+      reservationDate,
+      productName,
+      orderName: paymentPerson.name,
+      orderPhone: paymentPerson.phone,
+      userEmail: paymentPerson.email,
+      paymentPrice: totalPrice,
+      productPrice: totalPrice,
+      optionName: optionName,
+      optionCount: selectedOptions[optionName].count,
+      optionPrice: selectedOptions[optionName].price,
+      orderDate: new Date().toISOString(),
+      personNumber: peopleCount,
+    }));
+  
     try {
-      if (paymentType === '카카오 페이') {
-        payResponse = await PortOne.requestPayment({
-          storeId: REACT_APP_PortOne_StoreId,
-          channelKey: channelKey,
-          paymentId: paymentId,
-          orderName: productName,
-          currency: 'CURRENCY_KRW',
-          payMethod: payMethod,
-          productType: 'PRODUCT_TYPE_REAL',
-          totalAmount: 4,
-          easyPay: { easyPayProvider: 'KAKAOPAY' },
+      for (const data of paymentData) {
+        const notified = await fetch(`${SERVER_BASE_URL}/payment/complete`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify(data),
         });
-      } else {
-        payResponse = await PortOne.requestPayment({
-          storeId: REACT_APP_PortOne_StoreId,
-          channelKey: channelKey,
-          paymentId: paymentId,
-          orderName: productName,
-          currency: 'CURRENCY_KRW',
-          payMethod: payMethod,
-          productType: 'PRODUCT_TYPE_REAL',
-          totalAmount: 1000,
-        });
+  
+        if (!notified.ok) {
+          throw new Error('결제 완료 요청에 실패했습니다.');
+        }
       }
-
-      console.log('Payment response:', payResponse);
-
-      if (payResponse.code != null) {
-        alert(payResponse.message);
-        return;
-      }
-
-
-      const notified = await fetch(`${SERVER_BASE_URL}/payment/complete`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',  // 추가된 부분
-        body: JSON.stringify({
-          paymentId,
-          productId: productDetails.productId,
-          userId: 'testuser001',
-          reservationNumber: createOrderNumber,
-          reservationDate: reservationDate,
-          productName,
-          orderName: paymentPerson.name,
-          orderPhone: paymentPerson.phone,
-          userEmail: paymentPerson.email,
-          paymentPrice: totalPrice,
-          productPrice: totalPrice,
-          optionName: 'd',
-          optionCount: 4,
-          optionPrice: 4222,
-          orderDate: new Date().toISOString(),
-        }),
-      });
-
-      console.log('Fetch response:', notified);
-
-      if (notified.ok) {
-        alert('결제가 완료되었습니다.');
-      } else {
-        alert('결제 완료 요청에 실패했습니다.');
-      }
+      alert('결제가 완료되었습니다.');
+      navigate('/PaymentComplete', { state: { paymentPerson, paymentData } });
     } catch (error) {
-      console.error('Error during payment request:', error);
-      alert('결제 요청 중 오류가 발생했습니다.');
+      console.error('Error sending payment data to server:', error);
+      alert('서버로 데이터를 전송하는 중 오류가 발생했습니다.');
     }
   }
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form submitted with data:', paymentPerson, checkboxes, selectedPaymentMethod);
 
     if (!paymentPerson.name || !paymentPerson.phone || !paymentPerson.email) {
       alert('배송정보를 입력해주세요.');
@@ -156,10 +150,9 @@ const PaymentModal = ({ isOpen, onRequestClose, productDetails, productName, sta
       return;
     }
 
-    const allChecked = checkboxes.checkbox1 && checkboxes.checkbox2;
-    if (!allChecked) {
+    if (!checkboxes.checkbox1 || !checkboxes.checkbox2) {
       alert('약관에 동의해주세요');
-      return false;
+      return;
     }
 
     if (!radioSelected) {
@@ -167,7 +160,7 @@ const PaymentModal = ({ isOpen, onRequestClose, productDetails, productName, sta
       return;
     }
 
-    requestPayment(); // 결제 처리 함수 호출
+    requestPayment();
   };
 
   return (

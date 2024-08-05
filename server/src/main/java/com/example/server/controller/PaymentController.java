@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.server.controller;
 
 import com.example.server.dto.PaymentDTO;
 import com.example.server.service.PaymentService;

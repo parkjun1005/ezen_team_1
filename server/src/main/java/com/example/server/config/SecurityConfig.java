@@ -8,7 +8,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
@@ -20,22 +20,23 @@ public class SecurityConfig {
                 .cors(cors -> cors
                         .configurationSource(request -> {
                             CorsConfiguration configuration = new CorsConfiguration();
-                            configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
-                            configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
-                            configuration.setAllowedHeaders(Arrays.asList("*"));
+                            configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
+                            configuration.setAllowedMethods(Collections.singletonList("*")); // 모든 메서드를 허용
+                            configuration.setAllowedHeaders(Collections.singletonList("*")); // 모든 헤더를 허용
                             configuration.setAllowCredentials(true);
                             return configuration;
                         })
                 )
                 .csrf(csrf -> csrf
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                        .ignoringRequestMatchers("/api/**") // CSRF 토큰을 제외할 요청 패턴
+                        .ignoringRequestMatchers("/api/**")
+                        .ignoringRequestMatchers("/payment/**") // CSRF 토큰을 제외할 요청 패턴
                 )
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
+                                .requestMatchers("/payment/**").permitAll() // 결제 관련 요청을 모두 허용
                                 .requestMatchers("/api/**").permitAll()
                                 .requestMatchers("/images/**").permitAll()
-                                .requestMatchers("/payment/**").permitAll()
                                 .requestMatchers("/favicon.ico").permitAll()
                                 .anyRequest().authenticated()
                 );
@@ -43,5 +44,3 @@ public class SecurityConfig {
         return http.build();
     }
 }
-
-
