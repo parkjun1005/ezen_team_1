@@ -17,8 +17,9 @@ public class Payment {
     @Column(name = "payment_id")
     private Integer paymentId;
 
-    @Column(name = "product_id")
-    private Integer productId;
+    @ManyToOne
+    @JoinColumn(name = "product_id", referencedColumnName = "product_id")
+    private Product product; // Product 엔티티와의 관계 설정
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")

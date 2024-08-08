@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useLocation, useParams, useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./ReservationPayment.css";
 import PaymentModal from "../UI/PaymentModal";
 import "../UI/PaymentModal.css";
-import { fetchProductDetails, fetchOptions } from "../service/ApiService";
+import {
+  fetchProductDetails,
+  fetchOptions,
+  fetchPaymentDetails,
+} from "../service/ApiService";
+import { format } from "date-fns";
 
 export default function ReservationPayment() {
+  const location = useLocation();
   const { productName } = useParams();
-  const navigate = useNavigate(); // useNavigate 추가
+  const navigate = useNavigate();
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [productDetails, setProductDetails] = useState(null);
@@ -19,6 +25,7 @@ export default function ReservationPayment() {
   const [loading, setLoading] = useState(true);
   const [peopleCount, setPeopleCount] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [reservedDates, setReservedDates] = useState([]);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -33,8 +40,57 @@ export default function ReservationPayment() {
     navigate("/payment-success"); // 결제 성공 후 리디렉션할 경로
   };
 
+  const parseDateString = (dateStr) => {
+    if (!dateStr) {
+      console.error("Invalid date string:", dateStr);
+      return new Date(NaN); // Invalid Date
+    }
+  
+    // 정규식 패턴을 사용하여 날짜와 시간 부분을 추출합니다.
+    const regex = /^(\d{4})\. (\d{1,2})\. (\d{1,2})\. (오전|오후) (\d{1,2}):(\d{2}):(\d{2})$/;
+    const match = dateStr.match(regex);
+    
+    if (!match) {
+      console.error("Date string is malformed:", dateStr);
+      return new Date(NaN); // Invalid Date
+    }
+  
+    const [, year, month, day, period, hour, minute, second] = match;
+  
+    console.log("Date Part:", { year, month, day });
+    console.log("Time Part:", { hour, minute, second, period });
+  
+    // 시간 조정
+    let adjustedHour = parseInt(hour, 10);
+    if (period === "오후" && adjustedHour !== 12) {
+      adjustedHour += 12;
+    } else if (period === "오전" && adjustedHour === 12) {
+      adjustedHour = 0;
+    }
+  
+    // ISO 8601 형식으로 변환
+    const isoDateStr = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}T${String(adjustedHour).padStart(2, '0')}:${String(minute).padStart(2, '0')}:${String(second).padStart(2, '0')}Z`;
+    console.log("ISO Date String:", isoDateStr);
+  
+    const date = new Date(isoDateStr);
+  
+    // 날짜 객체가 유효한지 확인합니다.
+    if (isNaN(date.getTime())) {
+      console.error("Invalid date format:", isoDateStr);
+      return new Date(NaN); // Invalid Date
+    }
+  
+    return date;
+  };
+  
+  
+  
+  
+
+
   useEffect(() => {
     setLoading(true);
+
     fetchProductDetails(productName)
       .then((data) => {
         if (data) {
@@ -59,7 +115,68 @@ export default function ReservationPayment() {
       .catch((error) => {
         console.error("Error fetching Options:", error);
       });
+      fetchPaymentDetails(productName)
+    .then((data) => {
+      console.log("Fetched Payment Details:", data); // 데이터 형식 확인
+
+      const allReservedDates = [];
+
+      data.forEach((reservation) => {
+        if (!reservation || !reservation.reservationDate) {
+          console.error("Missing or invalid reservationDate:", reservation);
+          return;
+        }
+
+        console.log("Reservation Data:", reservation); // 각 예약 데이터 확인
+
+        // 날짜 문자열 처리
+        const [startDateStr, endDateStr] = reservation.reservationDate.split("-").map(str => str.trim());
+
+        if (!startDateStr || !endDateStr) {
+          console.error("Reservation date string is malformed:", reservation.reservationDate);
+          return;
+        }
+
+        const startDate = parseDateString(startDateStr);
+        const endDate = parseDateString(endDateStr);
+
+        if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+          console.error("Invalid date format:", { startDateStr, endDateStr });
+          return;
+        }
+
+        let current = new Date(startDate);
+        while (current <= endDate) {
+          allReservedDates.push(new Date(current));
+          current.setDate(current.getDate() + 1);
+        }
+      });
+
+      console.log("All Reserved Dates:", allReservedDates);
+      setReservedDates(allReservedDates);
+    })
+    .catch((error) => {
+      console.error("Error fetching payment details:", error);
+    });
+    
+
   }, [productName]);
+
+  const isDateReserved = (date) => {
+    return reservedDates.some((reservedDate) => {
+      const start = new Date(reservedDate);
+      const end = new Date(start);
+      end.setDate(end.getDate()); // 예약 종료일의 다음 날까지 비활성화
+  
+      return date >= start && date < end;
+    });
+  };
+  
+  
+  
+  const isValidDate = (date) => {
+    return date && !isNaN(date.getTime()) && !isDateReserved(date);
+  };
 
   const selectImage = (image) => {
     setSelectedImage(image);
@@ -73,9 +190,16 @@ export default function ReservationPayment() {
 
   const formatDate = (date) => {
     if (!date) return "";
-    const options = { year: "numeric", month: "2-digit", day: "2-digit", weekday: "short" };
+    const options = {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      weekday: "short",
+    };
     return new Date(date).toLocaleDateString("ko-KR", options);
   };
+
+  console.log(startDate, endDate);
 
   const handleOptionChange = (e) => {
     const optionName = e.target.value;
@@ -85,7 +209,9 @@ export default function ReservationPayment() {
         if (newOptions[optionName]) {
           newOptions[optionName].count += 1;
         } else {
-          const option = options.find((option) => option.optionName === optionName);
+          const option = options.find(
+            (option) => option.optionName === optionName
+          );
           if (option) {
             newOptions[optionName] = {
               count: 1,
@@ -130,6 +256,7 @@ export default function ReservationPayment() {
     }
     return 0;
   };
+
   const nights = calculateNights();
   const productPrice = productDetails?.price || 0;
   const totalProductPrice = productPrice * nights;
@@ -138,7 +265,6 @@ export default function ReservationPayment() {
     const { count, price } = selectedOptions[optionName];
     return acc + count * price;
   }, totalProductPrice);
-  
 
   const handlePeopleCountChange = (change) => {
     setPeopleCount((prevCount) => {
@@ -154,6 +280,8 @@ export default function ReservationPayment() {
     return <div>Product details not available.</div>;
   }
 
+  console.log(reservedDates);
+
   return (
     <>
       <div className="rp-body">
@@ -163,10 +291,26 @@ export default function ReservationPayment() {
               <img src={selectedImage} alt="Selected" />
             </div>
             <div className="rp-sub-images">
-              <img src={`${productDetails.mainImageUrl}`} alt="Thumbnail 1" onClick={() => selectImage(productDetails.mainImageUrl)} />
-              <img src={`${productDetails.subImageUrl}`} alt="Thumbnail 2" onClick={() => selectImage(productDetails.subImageUrl)} />
-              <img src={`${productDetails.subImageUrl2}`} alt="Thumbnail 3" onClick={() => selectImage(productDetails.subImageUrl2)} />
-              <img src={`${productDetails.subImageUrl3}`} alt="Thumbnail 4" onClick={() => selectImage(productDetails.subImageUrl3)} />
+              <img
+                src={`${productDetails.mainImageUrl}`}
+                alt="Thumbnail 1"
+                onClick={() => selectImage(productDetails.mainImageUrl)}
+              />
+              <img
+                src={`${productDetails.subImageUrl}`}
+                alt="Thumbnail 2"
+                onClick={() => selectImage(productDetails.subImageUrl)}
+              />
+              <img
+                src={`${productDetails.subImageUrl2}`}
+                alt="Thumbnail 3"
+                onClick={() => selectImage(productDetails.subImageUrl2)}
+              />
+              <img
+                src={`${productDetails.subImageUrl3}`}
+                alt="Thumbnail 4"
+                onClick={() => selectImage(productDetails.subImageUrl3)}
+              />
             </div>
           </div>
           <div className="rp-description-section">
@@ -207,9 +351,11 @@ export default function ReservationPayment() {
             <div>
               <h4>구비 시설</h4>
               <p>
-                킹 사이즈 베드 1, 싱글베드 2, TV, 쇼파, 테이블, 블루투스 스피커, 커피포트, 냉장고
+                킹 사이즈 베드 1, 싱글베드 2, TV, 쇼파, 테이블, 블루투스 스피커,
+                커피포트, 냉장고
                 <br />
-                인덕션(1구), 전자레인지, 드라이어기, 욕실용품(샴푸&린스&바디워시), 야외주방
+                인덕션(1구), 전자레인지, 드라이어기,
+                욕실용품(샴푸&린스&바디워시), 야외주방
               </p>
             </div>
             <h4 className="rp-red-h4">어쩌고저쩌고 어쩌고저쩌고</h4>
@@ -227,13 +373,18 @@ export default function ReservationPayment() {
                 selectsRange
                 inline
                 minDate={new Date()}
+                dateFormat="yyyy/MM/dd"
+                filterDate={isValidDate}
+                excludeDates={reservedDates} // 예약된 날짜 비활성화
+                placeholderText="예약 시작 날짜를 선택하세요"
               />
             </div>
           </div>
           {nights > 0 && (
             <div className="rp-price">
               <p>
-                {nights}박 {formatDate(startDate)} ~ {formatDate(endDate)} <span>{totalProductPrice.toLocaleString()}원</span>
+                {nights}박 {formatDate(startDate)} ~ {formatDate(endDate)}{" "}
+                <span>{totalProductPrice.toLocaleString()}원</span>
               </p>
               <div className="rp-person">
                 <button onClick={() => handlePeopleCountChange(-1)}>-</button>
@@ -252,12 +403,14 @@ export default function ReservationPayment() {
                 </li>
                 <li>
                   <p>
-                    푸른들 전용화로 + 장작 1망(10kg) + 착화탄 + 매직파이어(오로라가루) + 마시멜로우
+                    푸른들 전용화로 + 장작 1망(10kg) + 착화탄 +
+                    매직파이어(오로라가루) + 마시멜로우
                   </p>
                 </li>
                 <li>
                   <p>
-                    체크인 시, 웰컴 센터에서 이용시간을 말씀해주시기 바랍니다(16:00 ~ 20:00 내 이용)
+                    체크인 시, 웰컴 센터에서 이용시간을 말씀해주시기
+                    바랍니다(16:00 ~ 20:00 내 이용)
                   </p>
                 </li>
                 <li>
@@ -282,27 +435,35 @@ export default function ReservationPayment() {
             <select name="option" onChange={handleOptionChange}>
               <option value="">옵션 선택</option>
               {options.map((option) => (
-                <option key={option.optionName} value={option.optionName}>
+                <option key={option.optionId} value={option.optionName}>
                   {option.optionName}
                 </option>
               ))}
             </select>
             {Object.keys(selectedOptions).length > 0 && (
               <>
-                {Object.keys(selectedOptions).map((optionName) => (
-                  selectedOptions[optionName].count > 0 && (
-                  <div key={optionName} className="rp-selected">
-                    <h6>{optionName}</h6>
-                    <p>
-                      <button onClick={() => decreaseCount(optionName)}>-</button>
-                      {selectedOptions[optionName].count || 0}개
-                      <button onClick={() => increaseCount(optionName)}>+</button>
-                      <span>
-                        {(selectedOptions[optionName].count || 0) * (selectedOptions[optionName].price || 0)}원
-                      </span>
-                    </p>
-                  </div>
-                )))}
+                {Object.keys(selectedOptions).map(
+                  (optionName) =>
+                    selectedOptions[optionName].count > 0 && (
+                      <div key={optionName} className="rp-selected">
+                        <h6>{optionName}</h6>
+                        <p>
+                          <button onClick={() => decreaseCount(optionName)}>
+                            -
+                          </button>
+                          {selectedOptions[optionName].count || 0}개
+                          <button onClick={() => increaseCount(optionName)}>
+                            +
+                          </button>
+                          <span>
+                            {(selectedOptions[optionName].count || 0) *
+                              (selectedOptions[optionName].price || 0)}
+                            원
+                          </span>
+                        </p>
+                      </div>
+                    )
+                )}
                 <p className="rp-total-price">
                   총 가격: {totalPrice.toLocaleString()}원
                 </p>

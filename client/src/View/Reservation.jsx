@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Icon } from "@iconify/react";
 import { format, addMonths, subMonths, isBefore, addDays } from "date-fns";
-import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from "date-fns";
-import { isSameMonth, isSameDay } from "date-fns";
+import { startOfMonth, endOfMonth, startOfWeek, endOfWeek, isSameMonth, isSameDay } from "date-fns";
 import "./Reservation.css";
 import { Link } from "react-router-dom";
-import { fetchProducts } from '../service/ApiService';
+import { fetchProducts, fetchReservedDatesWithProductIds } from '../service/ApiService';
 
 const RenderHeader = ({ currentMonth, prevMonth, nextMonth }) => {
   return (
@@ -45,7 +44,7 @@ const RenderDays = () => {
   return <div className="body rv-row rv-days">{days}</div>;
 };
 
-const RenderCells = ({ currentMonth, selectedDate, onDateClick, products }) => {
+const RenderCells = ({ currentMonth, selectedDate, onDateClick, products = [], reservedDates = {} }) => {
   const monthStart = startOfMonth(currentMonth);
   const monthEnd = endOfMonth(monthStart);
   const startDate = startOfWeek(monthStart);
@@ -57,13 +56,16 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick, products }) => {
   let day = startDate;
   let formattedDate = "";
 
+
   while (day <= endDate) {
     for (let i = 0; i < 7; i++) {
       formattedDate = format(day, "d");
       const cloneDay = day;
-      const isPastDate = isBefore(addDays(day, 1), today); // 수정된 부분
+      const dayISO = format(cloneDay, "yyyy-MM-dd");
+      const isPastDate = isBefore(addDays(day, 1), today);
       const isDisabled = !isSameMonth(day, monthStart);
-      const isCurrentMonth = isSameMonth(day, currentMonth);
+      const reservedForDay = reservedDates[dayISO] || [];
+
       days.push(
         <div
           className={`col rv-cell ${
@@ -78,11 +80,7 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick, products }) => {
           key={day}
           onClick={() => onDateClick(cloneDay)}
         >
-          <span
-            className={
-              isDisabled || isPastDate ? "text rv-not-valid" : ""
-            }
-          >
+          <span className={isDisabled || isPastDate ? "text rv-not-valid" : ""}>
             {formattedDate}
             <br />
             {isPastDate ? (
@@ -90,16 +88,23 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick, products }) => {
                 <p className="rv-finish-text">예약종료</p>
               </div>
             ) : (
-              isCurrentMonth && (
+              isSameMonth(day, currentMonth) && !isDisabled && (
                 <div className="rv-camping-box">
-                  {products.map((product) => (
-                    <div key={product.productId}>
-                      <Link to={`/ReservationPayment/${product.name}`} className="rv-camping-link">
-                        {product.name}
-                      </Link>
-                      <br />
-                    </div>
-                  ))}
+                  {products.map((product) => {
+                    const isProductReserved = reservedForDay.includes(product.productId);
+                    return (
+                      <div key={product.productId}>
+                        {isProductReserved ? (
+                          <span className="rv-camping-link disabled">예약완료</span>
+                        ) : (
+                          <Link to={`/ReservationPayment/${product.name}`} state={{ reservedDates: reservedDates }} className="rv-camping-link">
+                            {product.name}
+                          </Link>
+                        )}
+                        <br />
+                      </div>
+                    );
+                  })}
                 </div>
               )
             )}
@@ -107,7 +112,7 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick, products }) => {
         </div>
       );
       day = addDays(day, 1);
-    } 
+    }
     rows.push(
       <div className="rv-row" key={day}>
         {days}
@@ -122,11 +127,11 @@ export const Reservation = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [products, setProducts] = useState([]);
+  const [reservedDates, setReservedDates] = useState({});
 
   useEffect(() => {
     fetchProducts()
       .then((data) => {
-        console.log('Fetched products:', data); // 데이터 확인용
         setProducts(data);
       })
       .catch((error) => {
@@ -134,15 +139,28 @@ export const Reservation = () => {
       });
   }, []);
 
+  useEffect(() => {
+    fetchReservedDatesWithProductIds()
+      .then((data) => {
+        setReservedDates(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching reserved dates:', error);
+      });
+  }, []);
+
   const prevMonth = () => {
     setCurrentMonth(subMonths(currentMonth, 1));
   };
+  
   const nextMonth = () => {
     setCurrentMonth(addMonths(currentMonth, 1));
   };
+  
   const onDateClick = (day) => {
     setSelectedDate(day);
   };
+
   return (
     <div className="Reservation-calendar">
       <RenderHeader
@@ -156,6 +174,7 @@ export const Reservation = () => {
         selectedDate={selectedDate}
         onDateClick={onDateClick}
         products={products}
+        reservedDates={reservedDates}
       />
     </div>
   );

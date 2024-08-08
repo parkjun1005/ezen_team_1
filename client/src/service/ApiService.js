@@ -1,4 +1,3 @@
-// src/service/ApiService.js
 
 import { API_BASE_URL } from "../api-config";
 
@@ -68,3 +67,35 @@ export function fetchProductDetails(productName) {
       console.log(`Error fetching details for product: ${productName}`, error);
     });
 }
+
+
+export const fetchReservedDatesWithProductIds = async () => {
+  return call('/payment/dates',"GET")
+  .then((data) => {
+    console.log("Fetched options:", data);
+    return data;
+  })
+  .catch((error) => {
+    console.log("Error fetching options:", error);
+  });
+
+};
+
+// return call(`/payment/${productName}`);
+
+
+// ApiService.js
+
+// 수정된 fetchPaymentDetails 함수
+export const fetchPaymentDetails = async (productName) => {
+  return call(`/payment/${productName}`)
+  .then((data) => {
+    console.log("Fetched options:", data);
+    return data;
+  })
+  .catch((error) => {
+    console.log("Error fetching options:", error);
+  });
+};
+
+// 다른 fetch 함수들도 경로에 맞게 수정해야 합니다.
