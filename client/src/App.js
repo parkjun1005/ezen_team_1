@@ -1,4 +1,7 @@
 import React from 'react';
+import {Reservation}  from "./View/Reservation"
+import ReservationPayment from "./View/ReservationPayment"
+import PaymentComplete from "./View/PaymentComplete";
 import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
 import Detailreview from './View/Detailreview';
 import NewsEvent from './View/NewsEvent';
@@ -11,7 +14,7 @@ import EditNewsEvent from './View/EditNewsEvent'; // Import the new component
 import { ReviewProvider } from './Component/ReviewContext';
 import { NewsProvider } from './Component/NewsContext';
 
-const App = () => {
+function App() {
   return (
     <ReviewProvider>
       <NewsProvider>
@@ -28,6 +31,9 @@ const App = () => {
             </header>
             <Routes>
               <Route path="/" element={<Navigate to="/Reviewlist" />} />
+              <Route path="/Reservation" element={<Reservation/>}/>
+        <Route path="/ReservationPayment/:productName" element={<ReservationPayment />} />
+        <Route path="/PaymentComplete" element={<PaymentComplete/>} />
               <Route path="/Detailreview/:id" element={<Detailreview />} />
               <Route path="/Newsevent/:id" element={<NewsEvent />} />
               <Route path="/Reviewwrite" element={<Reviewwrite />} />
