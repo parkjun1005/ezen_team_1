@@ -96,23 +96,42 @@ const PaymentModal = ({ isOpen, onRequestClose, productDetails, productName, sta
       String(productDetails.productId);
     const reservationDate = `${startDate.toLocaleString()}-${endDate.toLocaleString()}`;
   
-    const paymentData = Object.keys(selectedOptions).map((optionName) => ({
-      productId: productDetails.productId,
-      userId: 'testuser001',
-      reservationNumber: createOrderNumber,
-      reservationDate,
-      productName,
-      orderName: paymentPerson.name,
-      orderPhone: paymentPerson.phone,
-      userEmail: paymentPerson.email,
-      paymentPrice: totalPrice,
-      productPrice: totalPrice,
-      optionName: optionName,
-      optionCount: selectedOptions[optionName].count,
-      optionPrice: selectedOptions[optionName].price,
-      orderDate: new Date().toISOString(),
-      personNumber: peopleCount,
-    }));
+    const paymentData = Object.keys(selectedOptions).length > 0 ? 
+      Object.keys(selectedOptions).map((optionName) => ({
+        productId: productDetails.productId,
+        userId: 'testuser001',
+        reservationNumber: createOrderNumber,
+        reservationDate,
+        productName,
+        orderName: paymentPerson.name,
+        orderPhone: paymentPerson.phone,
+        userEmail: paymentPerson.email,
+        paymentPrice: totalPrice,
+        productPrice: totalPrice,
+        optionName: optionName,
+        optionCount: selectedOptions[optionName].count,
+        optionPrice: selectedOptions[optionName].price,
+        orderDate: new Date().toISOString(),
+        personNumber: peopleCount,
+      })) : [
+      {
+        productId: productDetails.productId,
+        userId: 'testuser001',
+        reservationNumber: createOrderNumber,
+        reservationDate,
+        productName,
+        orderName: paymentPerson.name,
+        orderPhone: paymentPerson.phone,
+        userEmail: paymentPerson.email,
+        paymentPrice: totalPrice,
+        productPrice: totalPrice,
+        optionName: null,
+        optionCount: 0,
+        optionPrice: 0,
+        orderDate: new Date().toISOString(),
+        personNumber: peopleCount,
+      }
+    ];
   
     try {
       for (const data of paymentData) {
@@ -122,7 +141,7 @@ const PaymentModal = ({ isOpen, onRequestClose, productDetails, productName, sta
           credentials: 'include',
           body: JSON.stringify(data),
         });
-  
+        console.log('전송 데이터:', JSON.stringify(paymentData, null, 2));
         if (!notified.ok) {
           throw new Error('결제 완료 요청에 실패했습니다.');
         }
@@ -134,6 +153,7 @@ const PaymentModal = ({ isOpen, onRequestClose, productDetails, productName, sta
       alert('서버로 데이터를 전송하는 중 오류가 발생했습니다.');
     }
   }
+  
   
 
   const handleSubmit = (e) => {

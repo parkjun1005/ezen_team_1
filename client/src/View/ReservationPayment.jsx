@@ -28,6 +28,10 @@ export default function ReservationPayment() {
   const [reservedDates, setReservedDates] = useState([]);
 
   const openModal = () => {
+    if (!startDate || !endDate) {
+      alert("예약 날짜를 선택해 주세요.");
+      return;
+    }
     setIsModalOpen(true);
   };
 
@@ -82,11 +86,6 @@ export default function ReservationPayment() {
   
     return date;
   };
-  
-  
-  
-  
-
 
   useEffect(() => {
     setLoading(true);
@@ -115,67 +114,77 @@ export default function ReservationPayment() {
       .catch((error) => {
         console.error("Error fetching Options:", error);
       });
-      fetchPaymentDetails(productName)
-    .then((data) => {
-      console.log("Fetched Payment Details:", data); // 데이터 형식 확인
 
-      const allReservedDates = [];
+    fetchPaymentDetails(productName)
+      .then((data) => {
+        console.log("Fetched Payment Details:", data);
 
-      data.forEach((reservation) => {
-        if (!reservation || !reservation.reservationDate) {
-          console.error("Missing or invalid reservationDate:", reservation);
-          return;
-        }
+        const allReservedDates = [];
 
-        console.log("Reservation Data:", reservation); // 각 예약 데이터 확인
+        data.forEach((reservation) => {
+          if (!reservation || !reservation.reservationDate) {
+            console.error("Missing or invalid reservationDate:", reservation);
+            return;
+          }
 
-        // 날짜 문자열 처리
-        const [startDateStr, endDateStr] = reservation.reservationDate.split("-").map(str => str.trim());
+          console.log("Reservation Data:", reservation);
 
-        if (!startDateStr || !endDateStr) {
-          console.error("Reservation date string is malformed:", reservation.reservationDate);
-          return;
-        }
+          const [startDateStr, endDateStr] = reservation.reservationDate.split("-").map(str => str.trim());
 
-        const startDate = parseDateString(startDateStr);
-        const endDate = parseDateString(endDateStr);
+          if (!startDateStr || !endDateStr) {
+            console.error("Reservation date string is malformed:", reservation.reservationDate);
+            return;
+          }
 
-        if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
-          console.error("Invalid date format:", { startDateStr, endDateStr });
-          return;
-        }
+          const startDate = parseDateString(startDateStr);
+          const endDate = parseDateString(endDateStr);
 
-        let current = new Date(startDate);
-        while (current <= endDate) {
-          allReservedDates.push(new Date(current));
-          current.setDate(current.getDate() + 1);
-        }
+          if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+            console.error("Invalid date format:", { startDateStr, endDateStr });
+            return;
+          }
+
+          allReservedDates.push({ startDate, endDate });
+        });
+
+        console.log("All Reserved Dates:", allReservedDates);
+        setReservedDates(allReservedDates);
+      })
+      .catch((error) => {
+        console.error("Error fetching payment details:", error);
       });
-
-      console.log("All Reserved Dates:", allReservedDates);
-      setReservedDates(allReservedDates);
-    })
-    .catch((error) => {
-      console.error("Error fetching payment details:", error);
-    });
-    
 
   }, [productName]);
 
-  const isDateReserved = (date) => {
-    return reservedDates.some((reservedDate) => {
-      const start = new Date(reservedDate);
-      const end = new Date(start);
+  // const isDateReserved = (date) => {
+  //   return reservedDates.some((reservedDate) => {
+  //     const start = new Date(reservedDate.startDate);
+  //     const end = new Date(reservedDate.endDate);
+  //     end.setDate(end.getDate() ); // 예약 종료일의 다음 날까지 비활성화
+  
+  //     return date >= start && date < end;
+  //   });
+  // };
+
+  const isDateRangeReserved = (start, end) => {
+    return reservedDates.some(({ startDate, endDate }) => {
+      const reservedStart = new Date(startDate);
+      const reservedEnd = new Date(endDate);
+      reservedEnd.setDate(reservedEnd.getDate()); // 예약 종료일의 다음 날까지 비활성화
+
+      return (start < reservedEnd && end > reservedStart);
+    });
+  };
+
+  const filterDate = (date) => {
+    return !reservedDates.some(({ startDate, endDate }) => {
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      start.setDate(start.getDate() - 1);
       end.setDate(end.getDate()); // 예약 종료일의 다음 날까지 비활성화
   
       return date >= start && date < end;
     });
-  };
-  
-  
-  
-  const isValidDate = (date) => {
-    return date && !isNaN(date.getTime()) && !isDateReserved(date);
   };
 
   const selectImage = (image) => {
@@ -184,6 +193,12 @@ export default function ReservationPayment() {
 
   const onChange = (dates) => {
     const [start, end] = dates;
+    if (start && end && isDateRangeReserved(start, end)) {
+      alert("예약이된 날짜가 포함되어있습니다. 다른 날짜를 선택해 주세요.");
+      setStartDate(null);
+      setEndDate(null);
+      return;
+    }
     setStartDate(start);
     setEndDate(end);
   };
@@ -374,7 +389,7 @@ export default function ReservationPayment() {
                 inline
                 minDate={new Date()}
                 dateFormat="yyyy/MM/dd"
-                filterDate={isValidDate}
+                filterDate={filterDate}
                 excludeDates={reservedDates} // 예약된 날짜 비활성화
                 placeholderText="예약 시작 날짜를 선택하세요"
               />
@@ -393,44 +408,46 @@ export default function ReservationPayment() {
               </div>
             </div>
           )}
-          <div className="rp-option-description">
-            <div className="rp-option">
-              <h5>불멍 세트</h5>
-              <img src="./images/다운로드 (1).jpg" alt="" />
-              <ul>
-                <li>
-                  <p>불멍을 더욱 편리하게 이용하실 수 있습니다.</p>
-                </li>
-                <li>
-                  <p>
-                    푸른들 전용화로 + 장작 1망(10kg) + 착화탄 +
-                    매직파이어(오로라가루) + 마시멜로우
-                  </p>
-                </li>
-                <li>
-                  <p>
-                    체크인 시, 웰컴 센터에서 이용시간을 말씀해주시기
-                    바랍니다(16:00 ~ 20:00 내 이용)
-                  </p>
-                </li>
-                <li>
-                  <p>장작은 함수율에 따라 g수가 상이할 수 있습니다</p>
-                </li>
-              </ul>
+          {options.length > 0 && ( // Add this condition to render options-related sections
+            <div className="rp-option-description">
+              <div className="rp-option">
+                <h5>불멍 세트</h5>
+                <img src={options[0]?.optionPic} alt="" />
+                <ul>
+                  <li>
+                    <p>불멍을 더욱 편리하게 이용하실 수 있습니다.</p>
+                  </li>
+                  <li>
+                    <p>
+                      푸른들 전용화로 + 장작 1망(10kg) + 착화탄 +
+                      매직파이어(오로라가루) + 마시멜로우
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      체크인 시, 웰컴 센터에서 이용시간을 말씀해주시기
+                      바랍니다(16:00 ~ 20:00 내 이용)
+                    </p>
+                  </li>
+                  <li>
+                    <p>장작은 함수율에 따라 g수가 상이할 수 있습니다</p>
+                  </li>
+                </ul>
+              </div>
+              <div className="rp-option">
+                <h5>숯불 세트</h5>
+                <img src={options[1]?.optionPic} alt="" />
+                <ul>
+                  <li>
+                    <p>바베큐 이용 시 필수 입니다</p>
+                  </li>
+                  <li>
+                    <p>푸른들 전용화로 + 숯 1봉 + 착화탄 + 그릴</p>
+                  </li>
+                </ul>
+              </div>
             </div>
-            <div className="rp-option">
-              <h5>숯불 세트</h5>
-              <img src="./images/다운로드 (1).jpg" alt="" />
-              <ul>
-                <li>
-                  <p>바베큐 이용 시 필수 입니다</p>
-                </li>
-                <li>
-                  <p>푸른들 전용화로 + 숯 1봉 + 착화탄 + 그릴</p>
-                </li>
-              </ul>
-            </div>
-          </div>
+          )}
           <div className="rp-option-choice">
             <select name="option" onChange={handleOptionChange}>
               <option value="">옵션 선택</option>
@@ -441,17 +458,20 @@ export default function ReservationPayment() {
               ))}
             </select>
             {Object.keys(selectedOptions).length > 0 && (
-              <>
+              <div className="rp-options-select">
                 {Object.keys(selectedOptions).map(
                   (optionName) =>
                     selectedOptions[optionName].count > 0 && (
                       <div key={optionName} className="rp-selected">
                         <h6>{optionName}</h6>
                         <p>
+                          <div>
                           <button onClick={() => decreaseCount(optionName)}>
                             -
                           </button>
+                          <label className="rp-selected-option-count">
                           {selectedOptions[optionName].count || 0}개
+                          </label>
                           <button onClick={() => increaseCount(optionName)}>
                             +
                           </button>
@@ -460,6 +480,7 @@ export default function ReservationPayment() {
                               (selectedOptions[optionName].price || 0)}
                             원
                           </span>
+                          </div>
                         </p>
                       </div>
                     )
@@ -467,7 +488,7 @@ export default function ReservationPayment() {
                 <p className="rp-total-price">
                   총 가격: {totalPrice.toLocaleString()}원
                 </p>
-              </>
+              </div>
             )}
           </div>
           <div>

@@ -106,7 +106,7 @@ const Editreview = () => {
     <div>
       <div className="container-123">
         <div className="qwer">리뷰 게시글수정</div>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className='rw-form'>
           <div className="form-group">
             <label htmlFor="title">제목</label>
             <input

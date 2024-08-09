@@ -62,7 +62,7 @@ const Detailreview = () => {
       <div className="container-123">
         <div className="qwer">review</div>
         <div className="content-header">
-          <h2>{review.review_head}</h2>
+          <h2 className='NewsEvent-h2'>{review.review_head}</h2>
         </div>
         <div className="content">
           <div className="post-info">

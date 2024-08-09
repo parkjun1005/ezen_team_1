@@ -85,7 +85,7 @@ const Newswrite = () => {
     <div>
       <div className="container-123">
         <div className="qwer">이벤트/공지사항 게시글 작성</div>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className='rw-form'>
           <div className="form-group">
             <label htmlFor="title">제목</label>
             <input

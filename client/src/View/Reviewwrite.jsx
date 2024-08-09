@@ -93,7 +93,7 @@ const Reviewwrite = () => {
     <div>
       <div className="container-123">
         <div className="qwer">리뷰 게시글 작성</div>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className='rw-form'> 
           <div className="form-group">
             <label htmlFor="title">제목</label>
             <input

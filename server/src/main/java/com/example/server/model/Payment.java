@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Getter
 @Setter
@@ -59,7 +60,7 @@ public class Payment {
     private double optionPrice;
 
     @Column(name = "order_date")
-    private LocalDateTime orderDate;
+    private OffsetDateTime orderDate;
 
     @Column(name = "person_number")
     private int personNumber;

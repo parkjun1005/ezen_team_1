@@ -30,7 +30,6 @@ function App() {
               </nav>
             </header>
             <Routes>
-              <Route path="/" element={<Navigate to="/Reviewlist" />} />
               <Route path="/Reservation" element={<Reservation/>}/>
         <Route path="/ReservationPayment/:productName" element={<ReservationPayment />} />
         <Route path="/PaymentComplete" element={<PaymentComplete/>} />

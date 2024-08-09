@@ -93,12 +93,44 @@
  .rp-price p{
     margin-top: 120px;
     text-align: left;
+    font-family: 'Times New Roman', Times, serif;
 }
 
 .rp-price p:last-child {
     margin-top: 20px;
 }
 
+.rp-person {
+    padding-top: 15px;
+}
+
+.rp-person span {
+    font-size: 16.7px;
+    margin: 0 10px;
+}
+
+.rp-person button  {
+    background-color: #9e8c79;
+    color: #fff;
+    border: none;
+    padding: 3px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.rp-person button:active {
+    background-color: #92816f;
+}
+.react-datepicker__day--in-selecting-range:not(.react-datepicker__day--in-range, .react-datepicker__month-text--in-range, .react-datepicker__quarter-text--in-range, .react-datepicker__year-text--in-range){
+    background-color: #c7b19a;
+}
+.react-datepicker__day--selected {
+    background-color: #92816f;
+}
+.react-datepicker__day--in-range {
+    background-color: #c7b19a
+}
 
 .rp-right-section .rp-option-description {
     margin-top: 100px;
@@ -178,18 +210,54 @@
     margin-left: 400px;
 }
 
+.rp-options-select button{
+    background-color: #9e8c79;
+    color: #fff;
+    border: none;
+    padding: 3px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.rp-options-select button:active {
+    background-color: #92816f;
+}
+.rp-selected-option-count {
+    padding: 0 10px;
+}
 
 .rp-right-section .rp-button:hover {
     background-color: #796a59ee;
 }
 
 
+.react-datepicker__header {
+    background-color: #a8947d;
+}
+
+.react-datepicker__header h2 {
+    color: #fcf3e9e3;
+}
+
 .react-datepicker {
     width: 100%;
     position: unset;
+    color: #95826e;
 
 }
+.react-datepicker__day--disabled {
+    cursor: default;
+    color: #e6d9cb;
+}
+.react-datepicker__day--disabled:hover {
+    background-color: white;
+}
 
+.react-datepicker__day--keyboard-selected {
+    background-color: #ffffff;
+
+}
 .rp-right-section .rp-date-reservation h2 {
     padding: 10px;
 }
@@ -203,12 +271,17 @@
 }
 .react-datepicker__day-name {
     margin: 20px;
+    color: #fcf3e9e3;
 }
 .react-datepicker__day {
     margin: 20px;
+    color: none;
 }
 
-
+.react-datepicker__day:hover {
+    background-color: #a8947f;
+    color: #ffffff;
+} 
 
 .react-datepicker__day-names {
     font-size: 20px;

@@ -45,7 +45,7 @@ const NewsEvent = () => {
       <div className="container-123">
         <div className="qwer">news/event</div>
         <div className="content-header">
-          <h2>{newsItem.title}</h2>
+          <h2 className='NewsEvent-h2'>{newsItem.title}</h2>
         </div>
         <div className="content">
           <p className="event-info">{newsItem.date} 조회수 999 ♡</p>

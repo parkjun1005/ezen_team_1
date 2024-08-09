@@ -10,11 +10,8 @@ export default function PaymentComplete() {
     <div className="paymentcomplete-body">
       <div className="body-body">
         <div className="payment-complete-text">
-          <h2>결제완료</h2>
+          <h2>예약이 <span>완료</span>되었습니다</h2>
           <img src="" alt="" />
-          <p>
-            예약이 <span>완료</span>되었습니다
-          </p>
         </div>
 
         <div className="payment-complete-info">
@@ -37,8 +34,9 @@ export default function PaymentComplete() {
 
         <div className="payment-complete-info">
           <h3>
-            결제상품 정보 <span>예약번호: {paymentData[0].reservationNumber}</span>
+            결제상품 정보 
           </h3>
+          <span>예약번호: {paymentData[0].reservationNumber}</span>
           <ul>
             <li><p>결제 날짜</p><span>{new Date(paymentData[0].orderDate).toLocaleString()}</span></li>
             <li><p>예약 날짜</p><span>{paymentData[0].reservationDate}</span></li>
@@ -50,7 +48,10 @@ export default function PaymentComplete() {
           </ul>
         </div>
       </div>
-      <div className="button"></div>
+      <div className="pc-button-div">
+        <button className='pc-button'>홈 화면으로 가기</button>
+        <button className='pc-button'>결제화면으로 가기</button>
+      </div>
     </div>
   );
 }

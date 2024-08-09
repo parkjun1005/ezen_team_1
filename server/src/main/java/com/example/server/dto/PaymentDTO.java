@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Getter
 @Setter
@@ -21,6 +22,6 @@ public class PaymentDTO {
     private String optionName;
     private int optionCount;
     private double optionPrice;
-    private LocalDateTime orderDate;
+    private OffsetDateTime orderDate;
     private int personNumber;
 }
