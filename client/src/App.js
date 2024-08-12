@@ -13,6 +13,8 @@ import Editreview from './View/Editreview';
 import EditNewsEvent from './View/EditNewsEvent'; // Import the new component
 import { ReviewProvider } from './Component/ReviewContext';
 import { NewsProvider } from './Component/NewsContext';
+import CampingRoom from './View/CampingRoom';
+import Community from './View/Community';
 
 function App() {
   return (
@@ -41,7 +43,12 @@ function App() {
               <Route path="/Newswrite" element={<Newswrite />} />
               <Route path="/Editreview/:id" element={<Editreview />} />
               <Route path="/EditNewsevent/:id" element={<EditNewsEvent />} /> {/* Add the route for EditNewsEvent */}
+              <Route path="/CampingRoom" element={<CampingRoom />} /> {/* Add the route for EditNewsEvent */}
+              <Route path="/Community" element={<Community />} /> {/* Add the route for EditNewsEvent */}
+            
             </Routes>
+
+
             <footer>
               <p>푸터임</p>
             </footer>
