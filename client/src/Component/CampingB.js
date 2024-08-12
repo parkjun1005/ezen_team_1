@@ -41,8 +41,8 @@ const CampingA = () => {
         <h1 class="camping_A_h">글램핑 B / 4 ~ 6 인 </h1>
             <div className="camping_A">
             <img class="camping_A_1" src="./img/camping2.png"/>
-<img class="camping_A_3" src="./img/camping2-1.jpg"/>
-<img class="camping_A_2" id="camping_B_3"  src="./img/camping2-2.jpg"/>
+<img className="camping_A_3" src="./img/camping2-1.jpg"/>
+<img className="camping_A_2" id="camping_B_3"  src="./img/camping2-2.jpg"/>
             </div>
 
             <div className="div_camping"  id="camping_div2">

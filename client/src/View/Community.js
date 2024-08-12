@@ -77,7 +77,7 @@ const Community = () => {
       <div className="section_grid">
     <div className="main_grid" id="main_grid">
         <p className="photo" id="photo">
-     <img src='./img/aaa4.jpg'/>
+     <img src='./img/aaa4.jpg' alt=''/>
     </p>
     <div class="text_div" id="text_div">
      <h1 class="text_h">매점</h1>
@@ -89,7 +89,7 @@ const Community = () => {
 <div  class="section_grid">
   <div className="main_grid" id="main_grid_revers">
     <p className="photo" id="photo_revers">
-    <img  src="./img/aaa2.jpg"/>
+    <img  src="./img/aaa2.jpg" alt=''/>
     </p>
     <div className="text_div_revers" id="text_div_revers">
      <h1 className="text_h" id="text_h_revers" > 수영장</h1>
@@ -101,7 +101,7 @@ const Community = () => {
 <div  className="section_grid">
     <div className="main_grid" id="main_grid1">
     <p className="photo" id="photo1">
-    <img  src="./img/aaa5.jpg"/>
+    <img src="./img/aaa5.jpg" alt=''/>
     </p>
     <div className="text_div" id="text_div1">
      <h1 className="text_h"> 샤워장</h1>

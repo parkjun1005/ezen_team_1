@@ -373,7 +373,7 @@ export default function ReservationPayment() {
                 욕실용품(샴푸&린스&바디워시), 야외주방
               </p>
             </div>
-            <h4 className="rp-red-h4">어쩌고저쩌고 어쩌고저쩌고</h4>
+            <h4 className="rp-red-h4">야외 수영장은 자유롭게 이용하실 수 있습니다</h4>
           </div>
         </div>
         <div className="rp-right-section">

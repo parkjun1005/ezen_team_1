@@ -39,12 +39,12 @@ const CaravanA = () => {
     return(
     
         <section className='camping_section' id="caravan_A">
-        <h1 class="camping_A_h">카라반 A / 2 ~ 4 인 </h1>
+        <h1 className="camping_A_h">카라반 A / 2 ~ 4 인 </h1>
             <div className="camping_A">
-            <img class="camping_A_1" src="./img/car1.jpg"/>
+            <img className="camping_A_1" src="./img/car1.jpg"/>
   
-  <img class="camping_A_2"  src="./img/caravan1-1.png"/>
-  <img class="camping_A_3" id="caravan_A_3" src="./img/caravan1-2.jpg" />
+  <img className="camping_A_2"  src="./img/caravan1-1.png"/>
+  <img className="camping_A_3" id="caravan_A_3" src="./img/caravan1-2.jpg" />
             </div>
 
             <div className="div_camping"  id="camping_div3">

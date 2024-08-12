@@ -38,6 +38,8 @@ const PaymentModal = ({ isOpen, onRequestClose, productDetails, productName, sta
     }
     setPaymentPerson((prev) => ({ ...prev, [name]: value.trim() }));
   };
+
+  
   const handleCheckboxChange = (name, isChecked) => {
     setCheckboxes((prev) => {
       const updatedCheckboxes = { ...prev, [name]: isChecked };

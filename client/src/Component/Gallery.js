@@ -39,13 +39,13 @@ const Gallery = () => {
   
     return(
         <section  id="gallery">
-        <h1 class="camping_A_h" id="camping_A_h1">Gallery</h1>
-        <div class="b_section_grid" id='b_section_grid'>
-        <img class="section_img1" id='section_img_2' src="./img/camping1.png"/>
-        <img class="section_img2" src="./img/camping1-2.png" />
-        <img class="section_img3" id='section_img_1' src="./img/campimg2.jpg"/>
-        <img class="section_img4" id='section_img_1-1' src="./img/car1.jpg"/>
-        <img class="section_img5" id='section_img_2-1' src="./img/caravan1-1.png"/>
+        <h1 className="camping_A_h" id="camping_A_h1" alt="">Gallery</h1>
+        <div className="b_section_grid" id='b_section_grid'alt="">
+        <img className="section_img1" id='section_img_2' src="./img/camping1.png" alt=""/>
+        <img className="section_img2" src="./img/camping1-2.png" alt=""/>
+        <img className="section_img3" id='section_img_1' src="./img/campimg2.jpg" alt=""/>
+        <img className="section_img4" id='section_img_1-1' src="./img/car1.jpg" alt=""/>
+        <img className="section_img5" id='section_img_2-1' src="./img/caravan1-1.png" alt=""/>
 
     </div>
     </section>
