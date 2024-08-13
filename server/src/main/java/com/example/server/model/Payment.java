@@ -24,7 +24,7 @@ public class Payment {
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    private User user; // User 엔티티와의 관계 설정
+    private UserEntity user; // User 엔티티와의 관계 설정
 
     @Column(name = "reservation_number")
     private String reservationNumber;

@@ -5,7 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
+
+import java.time.LocalDateTime;
 
 
 @Data
@@ -22,6 +23,6 @@ public class UserDTO {
     private String addressDetail;
     private int zoneCode;
     private String socialLogin;
-    private Timestamp enrollDate;
+    private LocalDateTime enrollDate;
     private String loginToken;
 }

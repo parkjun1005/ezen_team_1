@@ -3,6 +3,7 @@ import { Reservation } from "./View/Reservation";
 import ReservationPayment from "./View/ReservationPayment";
 import PaymentComplete from "./View/PaymentComplete";
 import MemBership from "./View/MemBership";
+import Login from "./View/Login";
 import {
   BrowserRouter as Router,
   Route,
@@ -48,6 +49,9 @@ function App() {
                   <li>
                     <Link to="/Community">Community</Link>
                   </li>
+                  <il>
+                    <Link to="/login">Login</Link>
+                  </il>
                 </ul>
               </nav>
             </header>
@@ -66,6 +70,7 @@ function App() {
               <Route path="/Newswrite" element={<Newswrite />} />
               <Route path="/Editreview/:id" element={<Editreview />} />
               <Route path="/register" element={<MemBership/>} />
+              <Route path="/login" element={<Login/>} />
               <Route
                 path="/EditNewsevent/:id"
                 element={<EditNewsEvent />}

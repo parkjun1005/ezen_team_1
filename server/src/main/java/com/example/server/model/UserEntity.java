@@ -1,20 +1,22 @@
 package com.example.server.model;
 
+import com.example.server.entity.Review;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Set;
+
 @Builder
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "User")
 public class UserEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private String userId;
 
@@ -43,12 +45,21 @@ public class UserEntity {
     private String socialLogin;
 
     @Column(name = "enroll_date")
-    private Timestamp enrollDate;
+    private LocalDateTime enrollDate;
 
     @Column(name = "login_token")
     private String loginToken;
 
+    @PrePersist
+    protected void onCreate() {
+        this.enrollDate = LocalDateTime.now();
+    }
+
     // User와 Payment 엔티티 간의 1:N 관계 설정
     @OneToMany(mappedBy = "user")
     private Set<Payment> payments;
+
+    // User와 Review 엔티티 간의 1:N 관계 설정
+    @OneToMany(mappedBy = "user")
+    private Set<Review> reviews;
 }

@@ -2,6 +2,7 @@ package com.example.server.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import com.example.server.model.UserEntity; // UserEntity 클래스 import
 import java.time.LocalDate;
 import java.util.List;
 
@@ -12,7 +13,15 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long review_id;
 
+    // 기존 user_id 필드 유지
+    @Column(name = "user_id", insertable = false, updatable = false)
     private String user_id;
+
+    // UserEntity와의 관계 설정
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
+    private UserEntity user;
+
     private Integer review_num;
     private Integer review_no;
     private String review_head;
@@ -46,6 +55,14 @@ public class Review {
 
     public void setUser_id(String user_id) {
         this.user_id = user_id;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 
     public Integer getReview_num() {

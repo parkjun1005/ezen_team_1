@@ -3,7 +3,7 @@ package com.example.server.service;
 import com.example.server.dto.PaymentDTO;
 import com.example.server.model.Payment;
 import com.example.server.model.Product;
-import com.example.server.model.User;
+import com.example.server.model.UserEntity;
 import com.example.server.persistence.PaymentRepository;
 import com.example.server.persistence.ProductRepository;
 import com.example.server.persistence.UserRepository;
@@ -77,7 +77,7 @@ public class PaymentService {
         payment.setProduct(product);
 
         // UserRepository를 사용하여 User 객체를 로드하고 설정
-        User user = userRepository.findById(paymentDTO.getUserId())
+        UserEntity user = userRepository.findById(paymentDTO.getUserId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
         payment.setUser(user);
 

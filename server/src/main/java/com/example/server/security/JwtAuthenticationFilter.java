@@ -17,7 +17,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-
 @Slf4j
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -29,13 +28,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
             String token = parseBearerToken(request);
-            log.info("필터가 실행 중입니다");
+            log.info("Parsed Token: {}", token); // 추가된 로그
 
             if (token != null && !token.equalsIgnoreCase("null")) {
                 String userId = tokenProvider.validateId(token);
 
                 if (userId != null) {
-                    log.info("인증된 유저 ID는: " + userId);
+                    log.info("Authenticated user ID: {}", userId);
 
                     AbstractAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                             userId,
@@ -48,13 +47,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     securityContext.setAuthentication(authentication);
                     SecurityContextHolder.setContext(securityContext);
                 } else {
-                    log.warn("11");
+                    log.warn("Invalid token: Could not extract user ID");
                 }
             } else {
-                log.warn("JWT 토큰이 없거나 유효하지 않습니다.");
+                log.warn("JWT Token is missing or invalid");
             }
         } catch (Exception ex) {
-            log.error("유저 인증이 실패했습니다", ex);
+            log.error("User authentication failed", ex);
         }
 
         filterChain.doFilter(request, response);
