@@ -1,18 +1,18 @@
 package com.example.server.model;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import java.util.Set;
-
+@Builder
 @Getter
 @Setter
 @Entity
-@Table(name = "user")
-public class User {
-
+@Table(name = "User")
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -27,7 +27,7 @@ public class User {
     @Column(name = "user_email", nullable = false)
     private String userEmail;
 
-    @Column(name = "user_phone")
+    @Column(name = "user_phone", nullable = false)
     private String userPhone;
 
     @Column(name = "address")
@@ -43,7 +43,7 @@ public class User {
     private String socialLogin;
 
     @Column(name = "enroll_date")
-    private LocalDateTime enrollDate;
+    private Timestamp enrollDate;
 
     @Column(name = "login_token")
     private String loginToken;

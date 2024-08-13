@@ -2,6 +2,7 @@ import React from "react";
 import { Reservation } from "./View/Reservation";
 import ReservationPayment from "./View/ReservationPayment";
 import PaymentComplete from "./View/PaymentComplete";
+import MemBership from "./View/MemBership";
 import {
   BrowserRouter as Router,
   Route,
@@ -64,6 +65,7 @@ function App() {
               <Route path="/Eventlist" element={<Eventlist />} />
               <Route path="/Newswrite" element={<Newswrite />} />
               <Route path="/Editreview/:id" element={<Editreview />} />
+              <Route path="/register" element={<MemBership/>} />
               <Route
                 path="/EditNewsevent/:id"
                 element={<EditNewsEvent />}
