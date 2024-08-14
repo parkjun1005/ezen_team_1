@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
 
@@ -46,8 +47,9 @@ public class SecurityConfig {
                                 .requestMatchers("/images/**").permitAll()
                                 .requestMatchers("/favicon.ico").permitAll()
                                 .requestMatchers("/member/**").permitAll()
-                                .anyRequest().permitAll()
-//                                .anyRequest().authenticated()
+                                .anyRequest().authenticated()
+
+//
 
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

@@ -35,6 +35,7 @@ public class PaymentService {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy. M. d. a h:mm:ss");
 
+
         for (Payment payment : payments) {
             try {
                 String reservationDate = payment.getReservationDate();

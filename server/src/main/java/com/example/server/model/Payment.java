@@ -54,7 +54,7 @@ public class Payment {
     private String optionName;
 
     @Column(name = "option_count")
-    private int optionCount;
+    private Integer optionCount;
 
     @Column(name = "option_price")
     private double optionPrice;
@@ -63,5 +63,5 @@ public class Payment {
     private OffsetDateTime orderDate;
 
     @Column(name = "person_number")
-    private int personNumber;
+    private Integer personNumber;
 }
