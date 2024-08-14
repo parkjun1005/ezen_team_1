@@ -1,0 +1,195 @@
+* {
+    padding: 0;
+    margin: 0;
+    text-decoration: 0;
+    list-style : none;
+}
+
+body .main-body {
+    width: 1280px;
+    margin: 0 auto;
+    max-width: 100%;   
+}
+
+/* header */
+header {
+    position: fixed;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    width: 100%;
+}
+
+.header_top {
+    padding: 5px 10px;
+    background:rgba(255, 255, 255, 0);
+    position: fixed;
+    width: 100%;
+    Z-index: 4;
+    top: 0;
+}
+
+.top_logo {
+    position: fixed;
+    z-index: 3;
+    top: 0;
+    display: inline-block;
+    left: 1%;
+    overflow: hidden;
+    position: fixed;
+}
+
+.top_logo img {
+    mix-blend-mode: multiply;
+    width: 330px;
+    height: 210px;
+    padding-left: 17px;
+    padding-top: 10px;
+}
+a {
+    text-decoration: none;
+    outline: none;
+}
+
+
+.header_category {
+    position: fixed;
+    width: 100%;
+}
+
+.gnbBox {
+    margin-top: 45px;
+}
+
+.gnb_wrap {
+    text-align: center;
+    position: relative;
+}
+
+ul.subnav {
+    width: 100%;
+    background: #dddddd;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    z-index: 999;
+    padding-left: 180px;
+    font-size: 15px;
+    display: none;
+
+}
+
+.subnav>li:nth-child(1) {
+    font-weight: bold;
+}
+
+
+.gnbBox > ul > li {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.gnbBox > ul > li > a {
+    color: #fff;
+    font-size: 24px;
+    font-weight: 300;
+    padding: 0 70px;
+}
+
+.gnb_wrap>li>:hover{
+    ul{display:block;}
+    text-decoration: underline;
+}
+
+.header_category .info_wrap {
+    display: flex;
+    position: fixed;
+    right: 80px;
+    padding: 0 5px;
+    color: #59697D;
+    font-size: 18px;
+}
+
+.line li {
+    padding: 0 10px;
+}
+
+.map_top img {
+    display: flex;
+    position: absolute;
+    width: 100%;
+    height: 950px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    object-fit: cover;
+}
+
+.waytocome {
+    padding-top: 150px;
+    padding-bottom: 150px;
+}
+.waytocome h1 {
+    text-align: center;
+    font-weight: 500;
+    font-size: 35px;
+}
+.waytocome p{
+    padding-top: 20px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 30px;
+}
+
+.map {
+    text-align: center;
+}
+
+.map img {
+    width: 60%;
+    height: 700px;
+}
+
+.map_text {
+    padding: 150px 0 250px 500px;
+}
+
+.map_text h1 {
+    font-weight: 500;
+    font-size: 23px;
+}
+
+.map_text p {
+    padding-top: 25px;
+    color:#666666;
+}
+/* footer */
+
+.footer {
+    background-color: #dddddd;
+    width: 100%;
+    height: 300px;
+}
+
+.footer img {
+    width: 231px;
+    height: 147px;
+    padding-left: 200px;
+    padding-top: 35px;
+}
+
+.footer_info {
+    display: flex;
+    padding: 15px 205px 0px;
+    font-size: 15px;
+    color: #666666;
+    justify-content: space-between;
+}
+
+.address p {
+    text-align: center;
+}
+
+.manager p {
+    text-align: right;
+}
