@@ -45,10 +45,6 @@ header {
     padding-left: 17px;
     padding-top: 10px;
 }
-/* a {
-    text-decoration: none;
-    outline: none;
-} */
 
 
 .header_category {
@@ -92,12 +88,11 @@ header {
     width: 100%;
     left: 0;
     top: 50px;
-    color: #535353;
+    color: #424242;
 }
 
 .gnbBox .subnav li {
-    background-color: rgb(255,255,255,0.5);
-    font-size: 18px;
+    background-color: rgba(255, 255, 255, 0.6);
 }
 
 .gnbBox .subnav li a{
@@ -106,7 +101,7 @@ header {
 }
 
 .gnbBox .gnb_wrap .subnav li a:hover {
-    background: #888888; opacity: 0.5;
+    background: #e7e5e5; opacity: 0.9;
 }
 
 .header_category .info_wrap {
