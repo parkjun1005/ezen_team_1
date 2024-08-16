@@ -116,19 +116,19 @@ const Information = () => {
             <div className="information">
                 <h2>내 정보</h2>
             </div>
-            <div className="form-group">
+            <div className="form_group">
                 <label htmlFor="name">이름</label>
                 <input type="text" id="name" className="infor" value={userInfo.userName} placeholder="이름" readOnly />
             </div>
-            <div className="form-group">
+            <div className="form_group">
                 <label htmlFor="username">아이디</label>
                 <input type="text" id="useId" className="infor" value={userInfo.userId} placeholder="아이디" readOnly />
             </div>
-            <div className="form-group">
+            <div className="form_group">
                 <label htmlFor="email">이메일</label>
                 <input type="email" id="email" className="infor" value={userInfo.userEmail} placeholder="이메일" readOnly />
             </div>
-            <div className="form-group">
+            <div className="form_group">
                 <label htmlFor="phone">휴대전화</label>
                 <input
                     type="text"
@@ -140,7 +140,7 @@ const Information = () => {
                     maxLength={11}
                 />
             </div>
-            <div className="form-group">
+            <div className="form_group">
                 <label htmlFor="address">주소</label>
                 <input
                     type="text"
@@ -152,7 +152,7 @@ const Information = () => {
                 />
                 <button className="address_btn" onClick={openModal}>주소찾기</button>
             </div>
-            <div className="form-group">
+            <div className="form_group">
                 <label htmlFor="address_detail">상세주소</label>
                 <input
                     type="text"
@@ -164,7 +164,7 @@ const Information = () => {
                 />
             </div>
             <div className="password_area">
-                <div className="form-group">
+                <div className="form_group">
                     <label htmlFor="current_password" className="infor_password">현재 비밀번호</label>
                     <input
                         type="password"
@@ -176,7 +176,7 @@ const Information = () => {
                         maxLength={20}
                     />
                 </div>
-                <div className="form-group">
+                <div className="form_group">
                     <label htmlFor="new_password">새 비밀번호</label>
                     <input
                         type="password"
@@ -189,7 +189,7 @@ const Information = () => {
                     />
                     
                 </div>
-                <div className="form-group">
+                <div className="form_group">
                     <label htmlFor="confirm_password" className="infor_password">비밀번호 확인</label>
                     <input
                         type="password"
