@@ -60,7 +60,7 @@ const Detailreview = () => {
   return (
     <div>
       <div className="container-123">
-        <div className="qwer">review</div>
+        <div className="qwer">자유게시판</div>
         <div className="content-header">
           <h2 className='NewsEvent-h2'>{review.review_head}</h2>
         </div>
