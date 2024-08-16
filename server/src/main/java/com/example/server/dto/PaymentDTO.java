@@ -20,8 +20,8 @@ public class PaymentDTO {
     private double paymentPrice;
     private double productPrice;
     private String optionName;
-    private int optionCount;
+    private Integer optionCount;
     private double optionPrice;
     private OffsetDateTime orderDate;
-    private int personNumber;
+    private Integer personNumber;
 }

@@ -49,9 +49,9 @@ function App() {
                   <li>
                     <Link to="/Community">Community</Link>
                   </li>
-                  <il>
+                  <li>
                     <Link to="/login">Login</Link>
-                  </il>
+                  </li>
                 </ul>
               </nav>
             </header>

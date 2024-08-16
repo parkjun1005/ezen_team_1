@@ -1,7 +1,6 @@
 package com.example.server.controller;
 
 import com.example.server.dto.PaymentDTO;
-import com.example.server.model.Payment;
 import com.example.server.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

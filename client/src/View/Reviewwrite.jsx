@@ -23,11 +23,12 @@ const Reviewwrite = () => {
     const date = new Date().toISOString().split('T')[0]; // 날짜를 YYYY-MM-DD 형식으로 변환
 
     const newReview = {
-      review_head,
-      review_content,
+      userId:"testuser001",
+      review_head:review_head,
+      review_content:review_content,
       file_path: file ? file.name : '',
       date,
-      author: '작성자명',
+      author: 'testuser001',
       view_count: 0,
       comments: []
     };
