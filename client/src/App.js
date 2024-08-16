@@ -4,6 +4,11 @@ import ReservationPayment from "./View/ReservationPayment";
 import PaymentComplete from "./View/PaymentComplete";
 import MemBership from "./View/MemBership";
 import Login from "./View/Login";
+import FindId from "./View/FindId";
+import FindPassword from "./View/FindPassword";
+import Consent from "./View/Consent";
+import ResetPassword from "./View/Resetpassword";
+import Information from "./View/Information";
 import {
   BrowserRouter as Router,
   Route,
@@ -52,6 +57,9 @@ function App() {
                   <il>
                     <Link to="/login">Login</Link>
                   </il>
+                  <li>
+                    <Link to ="/information">infor</Link>
+                  </li>
                 </ul>
               </nav>
             </header>
@@ -71,6 +79,11 @@ function App() {
               <Route path="/Editreview/:id" element={<Editreview />} />
               <Route path="/register" element={<MemBership/>} />
               <Route path="/login" element={<Login/>} />
+              <Route path="/findId" element={<FindId/>} />
+              <Route path="/findpassword" element={<FindPassword/>} />
+              <Route path="/Consent" element={<Consent/>} />
+              <Route path="/resetpassword" element={<ResetPassword/>} />
+              <Route path="/information" element={<Information/>} />
               <Route
                 path="/EditNewsevent/:id"
                 element={<EditNewsEvent />}

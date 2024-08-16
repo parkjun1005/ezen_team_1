@@ -57,7 +57,7 @@ function Login() {
                         <div className="look_for">
                             <Link to={"/findId"} className="link_wrap"><p>아이디 찾기</p></Link>
                             <p className="stick">|</p>
-                            <Link to={"/findPassword"} className="link_wrap"><p>비밀번호 찾기</p></Link>
+                            <Link to={"/findpassword"} className="link_wrap"><p>비밀번호 찾기</p></Link>
                             <p className="stick">|</p>
                             <Link to={"/Consent"} className="link_wrap"><p className="new_user">회원가입</p></Link>
                         </div>
