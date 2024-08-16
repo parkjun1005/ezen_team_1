@@ -140,3 +140,8 @@
     background-color: #ccc;
     cursor: not-allowed;
 }
+
+
+.member_msg.success {
+    color: blue;
+}

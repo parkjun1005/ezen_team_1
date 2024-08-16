@@ -25,4 +25,5 @@ public class UserDTO {
     private String socialLogin;
     private LocalDateTime enrollDate;
     private String loginToken;
+    private String newPassword;
 }
