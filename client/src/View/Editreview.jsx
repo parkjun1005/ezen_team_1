@@ -100,12 +100,12 @@ const Editreview = () => {
     }
   };
 
-  if (!review) return <div>리뷰가 없습니다.</div>;
+  if (!review) return <div>게시물이 없습니다.</div>;
 
   return (
     <div>
       <div className="container-123">
-        <div className="qwer">리뷰 게시글수정</div>
+        <div className="qwer">게시글수정</div>
         <form onSubmit={handleSubmit} className='rw-form'>
           <div className="form-group">
             <label htmlFor="title">제목</label>

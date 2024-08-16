@@ -22,7 +22,7 @@ const Reviewlist = () => {
   return (
     <div>
       <div className="container-123">
-        <div className="qwer">review</div>
+        <div className="qwer">자유게시판</div>
         <div className="search-123">
           <input type="text" placeholder="Search" />
         </div>
