@@ -1,0 +1,41 @@
+* {
+    padding: 0;
+    margin: 0;
+    text-decoration: 0;
+    list-style : none;
+}
+
+body .main-body {
+    width: 1280px;
+    margin: 0 auto;
+    max-width: 100%;   
+}
+
+.footer {
+    background-color: #dddddd;
+    width: 100%;
+    height: 300px;
+}
+
+.footer img {
+    width: 231px;
+    height: 147px;
+    padding-left: 200px;
+    padding-top: 35px;
+}
+
+.footer_info {
+    display: flex;
+    padding: 15px 205px 0px;
+    font-size: 15px;
+    color: #666666;
+    justify-content: space-between;
+}
+
+.address p {
+    text-align: center;
+}
+
+.manager p {
+    text-align: right;
+}
