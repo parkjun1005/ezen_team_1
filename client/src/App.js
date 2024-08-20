@@ -28,79 +28,50 @@ import { ReviewProvider } from "./Component/ReviewContext";
 import { NewsProvider } from "./Component/NewsContext";
 import CampingRoom from "./View/CampingRoom";
 import Community from "./View/Community";
+import Header from "./Component/Header";
+import Footer from "./Component/Footer";
+import Tour from "./Component/Tour";
+import Map from "./Component/Map";
+import Contents from "./Component/Contents";
 
 function App() {
   return (
     <ReviewProvider>
       <NewsProvider>
         <Router>
-          <div>
-            <header>
-              <p>헤더임</p>
-              <nav>
-                <ul>
-                  <li>
-                    <Link to="/Reviewlist">Reviewlist</Link>
-                  </li>
-                  <li>
-                    <Link to="/Eventlist">Eventlist</Link>
-                  </li>
-                  <li>
-                    <Link to="/Reservation">예약하기</Link>
-                  </li>
-                  <li>
-                    <Link to="/CampingRoom">CampingRoom</Link>
-                  </li>
-                  <li>
-                    <Link to="/Community">Community</Link>
-                  </li>
-                  <li>
-                    <Link to="/login">Login</Link>
-                  </li>
-                  <li>
-                    <Link to ="/information">infor</Link>
-                  </li>
-                </ul>
-              </nav>
-            </header>
-            <Routes>
-              <Route path="/Reservation" element={<Reservation />} />
-              <Route
-                path="/ReservationPayment/:productName"
-                element={<ReservationPayment />}
-              />
-              <Route path="/PaymentComplete" element={<PaymentComplete />} />
-              <Route path="/Detailreview/:id" element={<Detailreview />} />
-              <Route path="/Newsevent/:id" element={<NewsEvent />} />
-              <Route path="/Reviewwrite" element={<Reviewwrite />} />
-              <Route path="/Reviewlist" element={<Reviewlist />} />
-              <Route path="/Eventlist" element={<Eventlist />} />
-              <Route path="/Newswrite" element={<Newswrite />} />
-              <Route path="/Editreview/:id" element={<Editreview />} />
-              <Route path="/register" element={<MemBership/>} />
-              <Route path="/login" element={<Login/>} />
-              <Route path="/findId" element={<FindId/>} />
-              <Route path="/findpassword" element={<FindPassword/>} />
-              <Route path="/Consent" element={<Consent/>} />
-              <Route path="/resetpassword" element={<ResetPassword/>} />
-              <Route path="/information" element={<Information/>} />
-              <Route
-                path="/EditNewsevent/:id"
-                element={<EditNewsEvent />}
-              />{" "}
-              <Route path="/CampingRoom" element={<CampingRoom />} />{" "}
-              <Route path="/Community" element={<Community />} />{" "}
-            </Routes>
-            <footer>
-              <p>푸터임</p>
-            </footer>
-          </div>
+          <Header />
+          <Routes>
+            <Route path="/Tour" element={<Tour />} />
+            <Route path="/Map" element={<Map />} />
+            <Route path="/" element={<Contents />} />
+            <Route path="/Reservation" element={<Reservation />} />
+            <Route
+              path="/ReservationPayment/:productName"
+              element={<ReservationPayment />}
+            />
+            <Route path="/PaymentComplete" element={<PaymentComplete />} />
+            <Route path="/Detailreview/:id" element={<Detailreview />} />
+            <Route path="/Newsevent/:id" element={<NewsEvent />} />
+            <Route path="/Reviewwrite" element={<Reviewwrite />} />
+            <Route path="/Reviewlist" element={<Reviewlist />} />
+            <Route path="/Eventlist" element={<Eventlist />} />
+            <Route path="/Newswrite" element={<Newswrite />} />
+            <Route path="/Editreview/:id" element={<Editreview />} />
+            <Route path="/register" element={<MemBership />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/findId" element={<FindId />} />
+            <Route path="/findpassword" element={<FindPassword />} />
+            <Route path="/Consent" element={<Consent />} />
+            <Route path="/resetpassword" element={<ResetPassword />} />
+            <Route path="/information" element={<Information />} />
+            <Route path="/EditNewsevent/:id" element={<EditNewsEvent />} />{" "}
+            <Route path="/CampingRoom" element={<CampingRoom />} />{" "}
+            <Route path="/Community" element={<Community />} />{" "}
+          </Routes>
+          <Footer />
         </Router>
       </NewsProvider>
     </ReviewProvider>
-
-    
-
   );
 }
 

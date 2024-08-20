@@ -1,0 +1,65 @@
+.layerpopup img {
+    width: 440px;
+    height: 500px;
+}
+
+.layerpopup:before {
+    display: block;
+    position: fixed;
+    left: 0; top:0; width: 100%; height: 100%;
+    background: (0,0,0,0.5);
+    z-index: 900;
+}
+
+.layerpopup .layerBox {
+    z-index:10000;   
+    position:fixed;
+    left:85%;
+    top:48%;
+    transform:translate(-50%, -50%);
+    padding:8px;
+    background:#fff;
+}
+
+    .layerpopup .layerBox .btnTodayHide {
+    font-size:14px;
+    font-weight:600;
+    color:black; 
+    float: left;
+    text-decoration:none;
+    width: 150px; 
+    height : 30px;
+    line-height:30px;
+    border:black solid 1px;
+    text-align : center;
+    text-decoration:none;
+    }
+
+    .layerpopup div{
+        display : inline;
+    }
+
+    .layerpopup form{
+        margin-top : 10px;
+        font-size:15px;
+        width: 100%;
+        height : 30px;
+    }
+    .layerpopup #close {
+    font-size:16px;
+    font-weight:600;
+    width: 40px;
+    height : 30px;
+    color:black;
+    float: right;
+    line-height:30px;
+    text-align : center;
+    text-decoration:underline;
+    }
+    
+    .layerpopup a{
+        text-decoration : none;
+        color : black;
+        width: 50px;
+        height : 40px;
+    }
