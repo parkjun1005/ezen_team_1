@@ -1,0 +1,282 @@
+* {
+    padding: 0;
+    margin: 0;
+    text-decoration: 0;
+    list-style : none;
+}
+
+body .main-body {
+    width: 1280px;
+    margin: 0 auto;
+    max-width: 100%;   
+}
+
+/* header */
+header {
+    position: fixed;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    width: 100%;
+}
+
+.header_top {
+    padding: 5px 10px;
+    background:rgba(255, 255, 255, 0);
+    position: fixed;
+    width: 100%;
+    Z-index: 4;
+    top: 0;
+}
+
+.top_logo {
+    position: fixed;
+    z-index: 3;
+    top: 0;
+    display: inline-block;
+    left: 1%;
+    overflow: hidden;
+    position: fixed;
+}
+
+.top_logo img {
+    mix-blend-mode: multiply;
+    width: 330px;
+    height: 210px;
+    padding-left: 17px;
+    padding-top: 10px;
+}
+
+
+.header_category {
+    position: fixed;
+    width: 100%;
+}
+
+.gnbBox {
+    margin-top: 45px;
+}
+
+.gnb_wrap {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.gnbBox > ul > li {
+    vertical-align: top;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    position: relative;
+}
+
+.gnbBox .gnb_wrap>li:hover .subnav {
+    display: block;
+}
+
+.gnbBox > ul > li > a {
+    color: #fff;
+    font-size: 24px;
+    font-weight: 300;
+    padding: 0 70px;
+    display: block;
+}
+
+.gnbBox .subnav {
+    position: absolute;
+    display: none;
+    width: 100%;
+    left: 0;
+    top: 50px;
+    color: #535353;
+}
+
+.gnbBox .subnav li {
+    background-color: rgb(255,255,255,0.5);
+    font-size: 18px;
+}
+
+.gnbBox .subnav li a{
+    text-decoration: none;
+    color: inherit;
+}
+
+.gnbBox .gnb_wrap .subnav li a:hover {
+    background: #888888; opacity: 0.5;
+}
+
+.header_category .info_wrap {
+    display: flex;
+    position: fixed;
+    right: 80px;
+    padding: 0 5px;
+    color: #ffffff; opacity: 0.6;
+    font-size: 18px;
+}
+
+.info_wrap a{
+    color: #fff;
+}
+
+.line li {
+    padding: 0 10px;
+}
+
+
+/* main */
+
+.tour_top img {
+    display: flex;
+    width: 100%;
+    height: 950px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tour h1{
+    font-weight: 500;
+    text-align: center;
+    font-size: 35px;
+    padding-top: 150px;
+}
+
+.tour_location {
+    padding: 200px 300px;
+}
+
+.tour1 {
+    display: flex;
+    align-items: center;
+}
+
+.tour1 img {
+    width: 780px;
+    height: 500px;
+}
+
+.tour_text {
+    padding-left: 300px;
+}
+.tour1 h1 {
+    font-size: 37px;
+    font-weight: bolder;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+.tour_text p {
+    line-height: 25px;
+}
+
+.tour2 {
+    display: flex;
+    align-items: center;
+    padding: 150px 0;
+}
+
+.tour2 img {
+    width: 710px;
+    height: 410px;
+    overflow: auto;
+    float: right;
+}
+
+.tour_text2 {
+    padding-right: 300px;
+    padding-left: 100px;
+}
+
+.tour_text2 p {
+    line-height: 25px;
+}
+
+.tour2 h1 {
+    font-size: 37px;
+    font-weight: bolder;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+.tour3 {
+    display: flex;
+    align-items: center;
+}
+
+.tour3 img {
+    width: 780px;
+    height: 500px;
+}
+
+.tour_text3 {
+    padding-left: 300px;
+}
+.tour3 h1 {
+    font-size: 37px;
+    font-weight: bolder;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+.tour_text3 p {
+    line-height: 25px;
+}
+
+.tour4 {
+    display: flex;
+    align-items: center;
+    padding-top: 150px;
+}
+
+.tour4 img {
+    width: 780px;
+    height: 500px;
+    overflow: auto;
+    float: right;
+}
+
+.tour_text4 {
+    padding-right: 300px;
+    padding-left: 100px;
+}
+
+.tour_text4 p {
+    line-height: 25px;
+}
+.tour4 h1 {
+    font-size: 37px;
+    font-weight: bolder;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+/* footer */
+.footer {
+    background-color: #dddddd;
+    width: 100%;
+    height: 300px;
+}
+
+.footer img {
+    width: 231px;
+    height: 147px;
+    padding-left: 200px;
+    padding-top: 35px;
+}
+
+.footer_info {
+    display: flex;
+    padding: 15px 205px 0px;
+    font-size: 15px;
+    color: #666666;
+    justify-content: space-between;
+}
+
+.address p {
+    text-align: center;
+}
+
+.manager p {
+    text-align: right;
+}
