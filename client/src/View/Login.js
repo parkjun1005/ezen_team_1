@@ -25,10 +25,14 @@ function Login() {
 
             if (response.data.loginToken) { // loginToken이 존재하면
                 localStorage.setItem("ACCESS_TOKEN", response.data.loginToken); // 토큰을 로컬 스토리지에 저장
-                navigate("/Reservation"); // 로그인 성공 시 홈 화면으로 이동
+                navigate("/"); // 로그인 성공 시 홈 화면으로 이동
             }
         } catch (error) {
-            console.error('서버 응답 오류:', error.response?.data || error.message);
+            if (error.response && error.response.status === 500) {
+                alert('아이디 또는 비밀번호가 맞지 않습니다.');
+            } else {
+                console.error('서버 응답 오류:', error.response?.data || error.message);
+            }
         }
     };
 
@@ -49,8 +53,8 @@ function Login() {
 
                         <div className="but_area">
                             <button type="submit" className="Login_but">로그인</button>
-                            <button type="submit" className="sns_kakao" id="sns">카카오 로그인
-                                <img src="./img/kakao-svgrepo-com.svg" className="social" />
+                            <button type="button" className="sns_kakao" id="sns">카카오 로그인
+                                <img src="./img/kakao-svgrepo-com.svg" className="social" alt="카카오 로그인" />
                             </button>
                         </div>
 
