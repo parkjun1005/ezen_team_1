@@ -147,10 +147,21 @@ function MemBership() {
     };
 
     useEffect(() => {
-        const isFormValid = !userIdError && !passwordError && !confirmPasswordError && !emailError && !userNameError &&
-            userId && password && confirmPassword && email && userName && address && zoneCode && detailedAddress && isUserIdUnique;
-        setIsFormValid(isFormValid);
+        const isUserIdValid = userIdError === "사용 가능한 아이디입니다." && isUserIdUnique;
+        const isPasswordValid = !passwordError && password && confirmPassword && password === confirmPassword;
+        const isEmailValid = !emailError && email;
+        const isUserNameValid = !userNameError && userName;
+        const isAddressValid = address && zoneCode && detailedAddress;
+        setIsFormValid(
+            isUserIdValid && 
+            isPasswordValid && 
+            isEmailValid && 
+            isUserNameValid && 
+            isAddressValid
+        );
     }, [userIdError, passwordError, confirmPasswordError, emailError, userNameError, userId, password, confirmPassword, email, userName, address, zoneCode, detailedAddress, isUserIdUnique]);
+    
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
