@@ -9,12 +9,11 @@ import FindPassword from "./View/FindPassword";
 import Consent from "./View/Consent";
 import ResetPassword from "./View/Resetpassword";
 import Information from "./View/Information";
+import { AuthProvider } from './Component/AuthContext';
 import {
   BrowserRouter as Router,
   Route,
   Routes,
-  Link,
-  Navigate,
 } from "react-router-dom";
 import Detailreview from "./View/Detailreview";
 import NewsEvent from "./View/NewsEvent";
@@ -23,7 +22,7 @@ import Reviewlist from "./View/Reviewlist";
 import Eventlist from "./View/Eventlist";
 import Newswrite from "./View/Newswrite";
 import Editreview from "./View/Editreview";
-import EditNewsEvent from "./View/EditNewsEvent"; // Import the new component
+import EditNewsEvent from "./View/EditNewsEvent";
 import { ReviewProvider } from "./Component/ReviewContext";
 import { NewsProvider } from "./Component/NewsContext";
 import CampingRoom from "./View/CampingRoom";
@@ -36,6 +35,7 @@ import Contents from "./Component/Contents";
 
 function App() {
   return (
+    <AuthProvider>
     <ReviewProvider>
       <NewsProvider>
         <Router>
@@ -72,6 +72,7 @@ function App() {
         </Router>
       </NewsProvider>
     </ReviewProvider>
+    </AuthProvider>
   );
 }
 

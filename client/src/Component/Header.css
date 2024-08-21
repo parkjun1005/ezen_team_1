@@ -120,3 +120,7 @@ header {
 .line li {
     padding: 0 10px;
 }
+
+.logout_btn {
+    cursor: pointer;
+}
