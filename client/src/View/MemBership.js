@@ -4,7 +4,6 @@ import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
 import "./MemBership.css";
 import axios from 'axios';
-import { format } from 'date-fns';
 
 function MemBership() {
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -23,7 +22,8 @@ function MemBership() {
     const [emailError, setEmailError] = useState("");
     const [userNameError, setUserNameError] = useState("");
     const [isFormValid, setIsFormValid] = useState(false);
-    const navigate = useNavigate();  // useNavigate hook 사용
+    const [isUserIdUnique, setIsUserIdUnique] = useState(false);
+    const navigate = useNavigate();
 
     const SERVER_BASE_URL = 'http://localhost:8080';
 
@@ -54,6 +54,31 @@ function MemBership() {
             setUserIdError("아이디는 최소 4글자에서 최대 20글자여야 합니다.");
         } else {
             setUserIdError("");
+            setIsUserIdUnique(false);  // 아이디가 변경될 때마다 중복 상태를 초기화합니다.
+        }
+    };
+
+    // 아이디 중복 확인
+    const checkUserIdDuplication = async () => {
+        if (!userId) {
+            setUserIdError("아이디를 입력하세요.");
+            return;
+        }
+
+        try {
+            const response = await axios.get(`${SERVER_BASE_URL}/member/check-id`, {
+                params: { userId }
+            });
+
+            if (response.data) {
+                setUserIdError("이미 사용 중인 아이디입니다.");
+                setIsUserIdUnique(false);
+            } else {
+                setUserIdError("사용 가능한 아이디입니다.");
+                setIsUserIdUnique(true);
+            }
+        } catch (error) {
+            console.error('중복 확인 오류:', error.response?.data || error.message);
         }
     };
 
@@ -119,15 +144,24 @@ function MemBership() {
     const handleUserPhoneChange = (e) => {
         const newUserPhone = e.target.value;
         setUserPhone(newUserPhone);
-
-        // 전화번호 유효성 검사 추가 가능
     };
 
     useEffect(() => {
-        const isFormValid = !userIdError && !passwordError && !confirmPasswordError && !emailError && !userNameError &&
-            userId && password && confirmPassword && email && userName && address && zoneCode && detailedAddress;
-        setIsFormValid(isFormValid);
-    }, [userIdError, passwordError, confirmPasswordError, emailError, userNameError, userId, password, confirmPassword, email, userName, address, zoneCode, detailedAddress]);
+        const isUserIdValid = userIdError === "사용 가능한 아이디입니다." && isUserIdUnique;
+        const isPasswordValid = !passwordError && password && confirmPassword && password === confirmPassword;
+        const isEmailValid = !emailError && email;
+        const isUserNameValid = !userNameError && userName;
+        const isAddressValid = address && zoneCode && detailedAddress;
+        setIsFormValid(
+            isUserIdValid && 
+            isPasswordValid && 
+            isEmailValid && 
+            isUserNameValid && 
+            isAddressValid
+        );
+    }, [userIdError, passwordError, confirmPasswordError, emailError, userNameError, userId, password, confirmPassword, email, userName, address, zoneCode, detailedAddress, isUserIdUnique]);
+    
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -183,10 +217,14 @@ function MemBership() {
                                 <label>
                                     <p className="membership_wrap duplication_btn">
                                         <input type="text" title="아이디" placeholder="아이디" maxLength={20} id="userId" name='userId' className="member_item" value={userId} onChange={handleUserIdChange} />
-                                        <button className="duplication">중복확인</button>
+                                        <button type="button" className="duplication" onClick={checkUserIdDuplication}>중복확인</button>
                                     </p>
                                 </label>
-                                {userIdError && <div className="member_msg error">{userIdError}</div>}
+                                {userIdError && (
+                                    <div className={`member_msg ${isUserIdUnique ? 'success' : 'error'}`}>
+                                        {userIdError}
+                                    </div>
+                                )}
                                 <div className="member_msg">4~20자리 영문 소문자, 숫자 조합만 가능합니다</div>
                             </div>
                             <div className="member_input">

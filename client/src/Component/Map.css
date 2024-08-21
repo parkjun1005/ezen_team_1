@@ -1,0 +1,62 @@
+* {
+    padding: 0;
+    margin: 0;
+    text-decoration: 0;
+    list-style : none;
+}
+
+body .main-body {
+    width: 1280px;
+    margin: 0 auto;
+    max-width: 100%;   
+}
+
+.map_top img {
+    display: flex;
+    position: absolute;
+    width: 100%;
+    height: 950px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    object-fit: cover;
+}
+
+.waytocome {
+    padding-top: 150px;
+    padding-bottom: 150px;
+}
+.waytocome h1 {
+    text-align: center;
+    font-weight: 500;
+    font-size: 35px;
+}
+.waytocome p{
+    padding-top: 20px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 30px;
+}
+
+.map {
+    text-align: center;
+}
+
+.map img {
+    width: 60%;
+    height: 700px;
+}
+
+.map_text {
+    padding: 150px 0 250px 500px;
+}
+
+.map_text h1 {
+    font-weight: 500;
+    font-size: 23px;
+}
+
+.map_text p {
+    padding-top: 25px;
+    color:#666666;
+}
