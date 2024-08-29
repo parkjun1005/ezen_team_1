@@ -31,16 +31,16 @@ header {
 .top_logo {
     position: fixed;
     z-index: 3;
-    top: 0;
+    top: -20px;
     display: inline-block;
-    left: 1%;
+    left: 2%;
     overflow: hidden;
     position: fixed;
 }
 
 .top_logo img {
     mix-blend-mode: multiply;
-    width: 330px;
+    width: 250px;
     height: 210px;
     padding-left: 17px;
     padding-top: 10px;
@@ -50,6 +50,7 @@ header {
 .header_category {
     position: fixed;
     width: 100%;
+    background-color: #42424200;
 }
 
 .gnbBox {
@@ -75,7 +76,7 @@ header {
 }
 
 .gnbBox > ul > li > a {
-    color: #fff;
+    color: #ccc;
     font-size: 24px;
     font-weight: 300;
     padding: 0 70px;
@@ -114,7 +115,7 @@ header {
 }
 
 .info_wrap a{
-    color: #fff;
+    color: #ccc;
 }
 
 .line li {

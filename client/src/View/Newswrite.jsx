@@ -82,7 +82,7 @@ const Newswrite = () => {
   };
 
   return (
-    <div>
+    <div className='newswrite'>
       <div className="container-123">
         <div className="qwer">이벤트/공지사항 게시글 작성</div>
         <form onSubmit={handleSubmit} className='rw-form'>
@@ -145,7 +145,7 @@ const Newswrite = () => {
               <img src={`http://localhost:8080${filePath}`} alt="Preview" style={{ maxWidth: '100%' }} />
             </div>
           )}
-          <button type="submit">글쓰기</button>
+          <button type="submit" className='go'>글쓰기</button>
         </form>
       </div>
     </div>

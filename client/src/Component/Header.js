@@ -22,13 +22,13 @@ function Header() {
         <div className="gnbBox">
           <ul className="gnb_wrap">
             <li>
-              <a href="#">소개</a>
+            <Link to="/Tour">소개</Link>
               <ul className="subnav">
                 <li><Link to="/Tour">관광시설</Link></li>
                 <li><Link to="/Map">오시는길</Link></li>
               </ul>
             </li>
-            <li><a href="#">공용시설</a></li>
+            <li><Link to="/CampingRoom">공용시설</Link></li>
             <li>
               <a href="#">객실</a>
               <ul className="subnav">
@@ -38,9 +38,9 @@ function Header() {
             <li>
               <a href="#">게시판</a>
               <ul className="subnav">
-                <li><a href="#">공지사항</a></li>
-                <li><a href="#">이벤트</a></li>
-                <li><a href="#">소중한 후기</a></li>
+              <li><Link to="/Eventlist">공지사항</Link></li>
+                <li><Link to="/Eventlist">이벤트</Link></li>
+                <li><Link to="/Reviewlist">소중한 후기</Link></li>
               </ul>
             </li>
             <li><Link to="/Reservation">예약하기</Link></li>

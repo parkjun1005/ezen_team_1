@@ -26,7 +26,7 @@ const Eventlist = () => {
   };
 
   return (
-    <div>
+    <div className='eventlist'>
       <div className="container-123">
         <div className="qwer">자유게시판</div>
         <div className="search-123">

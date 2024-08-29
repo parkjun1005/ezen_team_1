@@ -5,6 +5,7 @@ import { PiLockKeyFill } from "react-icons/pi";
 import { FiUser } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Component/AuthContext";
+import logo from "../assets/images/로고2.png"
 
 function Login() {
     const navigate = useNavigate();
@@ -37,6 +38,7 @@ function Login() {
 
     return (
         <div className="Login">
+            <div className="login_logo"><p><img src={logo} alt="logo" /></p></div>
             <h2>로그인</h2>
             <div className="input_box">
                 <div>

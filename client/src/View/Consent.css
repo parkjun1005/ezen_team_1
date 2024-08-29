@@ -1,7 +1,16 @@
+
+.consent {
+    margin-top: 300px;
+    margin-bottom: 230px;
+}
+
+
+
 .consent_title {
     text-align: center;
     font-size: 14px;
     font-weight: 700;
+    margin-bottom: 20px;
 }
 
 .all_consent {
@@ -11,7 +20,7 @@
     display: flex;
     height: 52px;
     padding-left: 15px;
-    width: 290px;
+    width: 400px;
     margin: auto;
     font-size: 15px;
     font-weight: 700;
@@ -33,12 +42,12 @@
 .consent_item {
     align-items: center;
     display: flex;
-    height: 40px;
+    height: 50px;
     justify-content: space-between;
     padding-left: 20px;
-    width: 289px;
+    width: 396px;
     margin: auto;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 700;
 }
 
@@ -62,8 +71,8 @@
     background-color: #95826e;
     color: #fff;
     border: none;
-    width: 300px;
-    height: 50px;
+    width: 400px;
+    height: 60px;
     font-size: 16px;
     font-weight: 700;
     letter-spacing: 0.9px;
