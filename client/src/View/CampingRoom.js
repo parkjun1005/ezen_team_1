@@ -12,7 +12,6 @@ const CampingRoom = () => {
 
   return (
   <div>
-  
     <Gallery/>
     <CampingA/>
     <CampingB/>

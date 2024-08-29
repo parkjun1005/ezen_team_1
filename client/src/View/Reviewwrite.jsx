@@ -91,7 +91,7 @@ const Reviewwrite = () => {
   };
 
   return (
-    <div>
+    <div className='reviewwrite'>
       <div className="container-123">
         <div className="qwer">리뷰 게시글 작성</div>
         <form onSubmit={handleSubmit} className='rw-form'> 

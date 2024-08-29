@@ -5,6 +5,27 @@
     --border-color: #b0a290; 
 }
 
+
+.eventlist {
+    margin-top: 250px;
+    margin-bottom: 390px;
+}
+
+.reviewwrite {
+    margin-top: 270px;
+    margin-bottom: 270px;
+}
+
+.newswrite {
+    margin-top: 270px;
+    margin-bottom: 210px;
+}
+
+.reviewlist {
+    margin-top: 270px;
+    margin-bottom: 370px;
+}
+
 .container-123 {
     width: 700px;
     margin: 0 auto;
@@ -413,15 +434,6 @@ th.author-header, th.date-header, td.author, td.date {
     border-radius: 5px;
 }
 
-footer {
-    margin-top: 90px;
-    background: #fff;
-    border-top: 1px solid var(--border-color);
-    padding: 20px;
-    text-align: center;
-    font-family: 'InkLipquid', serif;
-    color: black;
-}
 
 .star {
     font-size: 2em;
@@ -432,4 +444,14 @@ footer {
 
 .star.selected, .star:hover, .star:hover ~ .star {
     color: #f5b301;
+}
+
+.go {
+    background-color: #95826e;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 10px 20px;
+    font-family: 'InkLipquid', serif;
+    border-radius: 5px;
 }
