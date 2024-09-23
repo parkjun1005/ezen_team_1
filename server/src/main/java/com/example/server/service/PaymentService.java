@@ -117,4 +117,11 @@ public class PaymentService {
         dto.setPersonNumber(payment.getPersonNumber());
         return dto;
     }
+
+    public List<PaymentDTO> getPaymentsByUserId(String userId) {
+        List<Payment> payments = paymentRepository.findByUser_UserId(userId);
+        return payments.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
 }

@@ -36,7 +36,10 @@ public class PaymentController {
             return ResponseEntity.status(500).body("Error processing payment");
         }
 
-
+    }
+    @GetMapping("/user/{userId}")
+    public List<PaymentDTO> getPaymentsByUserId(@PathVariable String userId) {
+        return paymentService.getPaymentsByUserId(userId);
 
     }
 }

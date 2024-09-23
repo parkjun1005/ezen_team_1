@@ -86,7 +86,6 @@ public class UserService {
         } else {
             userId = principal.toString();
         }
-
         return userRepository.findByUserId(userId);
     }
 

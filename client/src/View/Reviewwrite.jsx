@@ -2,14 +2,14 @@ import React, { useState, useContext } from 'react';
 import { ReviewContext } from '../Component/ReviewContext';
 import { useNavigate } from 'react-router-dom';
 import '../View/Review.css';
-
+import { useAuth } from "../Component/AuthContext";
 const Reviewwrite = () => {
   const { addReview } = useContext(ReviewContext);
   const navigate = useNavigate();
   const [review_head, setReviewHead] = useState(''); // 제목
   const [review_content, setReviewContent] = useState(''); // 내용
   const [file, setFile] = useState(null);
-
+  const { user } = useAuth();
   const handleFileClick = () => {
     document.getElementById('file').click();
   };
@@ -23,12 +23,12 @@ const Reviewwrite = () => {
     const date = new Date().toISOString().split('T')[0]; // 날짜를 YYYY-MM-DD 형식으로 변환
 
     const newReview = {
-      userId:"testuser001",
+      userId:user.userId,
       review_head:review_head,
       review_content:review_content,
       file_path: file ? file.name : '',
       date,
-      author: 'testuser001',
+      author: user.userId,
       view_count: 0,
       comments: []
     };

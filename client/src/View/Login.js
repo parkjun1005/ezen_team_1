@@ -1,23 +1,22 @@
-import React, { useContext } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Login.css";
 import { PiLockKeyFill } from "react-icons/pi";
 import { FiUser } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../Component/AuthContext";
+import { useAuth } from "../Component/AuthContext"; 
 import logo from "../assets/images/로고2.png"
 
 function Login() {
     const navigate = useNavigate();
-    const { login } = useContext(AuthContext);
+    const { login, logout } = useAuth();  
+    const [sessionTimeout, setSessionTimeout] = useState(null);
 
     const handleLogin = async (event) => {
         event.preventDefault();
-
         const data = new FormData(event.target);
         const userId = data.get("userId");
         const userPw = data.get("userPw");
-
         try {
             const response = await axios.post('http://localhost:8080/member/login', {
                 userId: userId,
@@ -25,16 +24,30 @@ function Login() {
             }, {
                 headers: { 'Content-Type': 'application/json' }
             });
-
             if (response.data.loginToken) {
-                login(response.data.loginToken); // 로그인 상태 업데이트
-                navigate("/"); // 로그인 성공 시 메인 페이지로 이동
+                login({ userId }, response.data.loginToken);
+                navigate("/");
+                const timer = setTimeout(() => {
+                    alert("세션이 만료되었습니다. 다시 로그인해주세요.");
+                    logout();
+                    navigate("/login");
+                }, 30 * 60 * 1000);
+                setSessionTimeout(timer); 
             }
         } catch (error) {
             console.error('서버 응답 오류:', error.response?.data || error.message);
             alert('아이디나 비밀번호가 맞지 않습니다.');
         }
     };
+
+    useEffect(() => {
+        return () => {
+            if (sessionTimeout) {
+                clearTimeout(sessionTimeout);
+            }
+        };
+    }, [sessionTimeout]);
+
 
     return (
         <div className="Login">
@@ -54,9 +67,6 @@ function Login() {
 
                         <div className="but_area">
                             <button type="submit" className="Login_but">로그인</button>
-                            <button type="submit" className="sns_kakao" id="sns">카카오 로그인
-                                <img src="./img/kakao-svgrepo-com.svg" className="social" />
-                            </button>
                         </div>
 
                         <div className="look_for">
