@@ -7,7 +7,6 @@ import Login from "./View/Login";
 import FindId from "./View/FindId";
 import FindPassword from "./View/FindPassword";
 import Consent from "./View/Consent";
-import ResetPassword from "./View/Resetpassword";
 import Information from "./View/Information";
 import { AuthProvider } from './Component/AuthContext';
 import {
@@ -32,7 +31,7 @@ import Footer from "./Component/Footer";
 import Tour from "./Component/Tour";
 import Map from "./Component/Map";
 import Contents from "./Component/Contents";
-
+import RoomCheck from "./View/RoomCheck";
 function App() {
   return (
     <AuthProvider>
@@ -62,11 +61,11 @@ function App() {
             <Route path="/findId" element={<FindId />} />
             <Route path="/findpassword" element={<FindPassword />} />
             <Route path="/Consent" element={<Consent />} />
-            <Route path="/resetpassword" element={<ResetPassword />} />
             <Route path="/information" element={<Information />} />
             <Route path="/EditNewsevent/:id" element={<EditNewsEvent />} />{" "}
             <Route path="/CampingRoom" element={<CampingRoom />} />{" "}
             <Route path="/Community" element={<Community />} />{" "}
+            <Route path="/RoomCheck" element={<RoomCheck />} />
           </Routes>
           <Footer />
         </Router>

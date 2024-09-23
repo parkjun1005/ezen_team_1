@@ -22,6 +22,7 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
@@ -82,7 +83,7 @@ public class UserController {
                         .build();
                 return ResponseEntity.ok().body(responseUserDTO);
             } else {
-                throw new RuntimeException("Invalid login credentials");
+                throw new RuntimeException("잘못된 로그인 인증");
             }
         } catch (Exception e) {
             e.printStackTrace(); // 콘솔에 오류를 출력

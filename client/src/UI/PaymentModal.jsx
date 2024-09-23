@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Modal from 'react-modal';
 import * as PortOne from '@portone/browser-sdk/v2';
 import { v4 as uuidv4 } from 'uuid';
 import MultiPayment from '../Component/MultiPayment';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../Component/AuthContext'; // AuthContext 임포트
 
 Modal.setAppElement('#root');
 
 const PaymentModal = ({ isOpen, onRequestClose, productDetails, productName, startDate, endDate, selectedOptions, peopleCount, totalPrice }) => {
-  const navigate = useNavigate(); // useNavigate 훅 사용
+  const navigate = useNavigate(); 
+  const { user } = useAuth(); // 현재 로그인한 사용자 정보 가져오기
   
   const { REACT_APP_PortOne_StoreId } = process.env;
   const { REACT_APP_PortOne_ChannelKey, REACT_APP_PortOne_Kakao_ChannelKey } = process.env;
@@ -39,7 +41,6 @@ const PaymentModal = ({ isOpen, onRequestClose, productDetails, productName, sta
     setPaymentPerson((prev) => ({ ...prev, [name]: value.trim() }));
   };
 
-  
   const handleCheckboxChange = (name, isChecked) => {
     setCheckboxes((prev) => {
       const updatedCheckboxes = { ...prev, [name]: isChecked };
@@ -101,7 +102,7 @@ const PaymentModal = ({ isOpen, onRequestClose, productDetails, productName, sta
     const paymentData = Object.keys(selectedOptions).length > 0 ? 
       Object.keys(selectedOptions).map((optionName) => ({
         productId: productDetails.productId,
-        userId: 'testuser001',
+        userId: user.userId, // 로그인한 사용자의 userId를 사용
         reservationNumber: createOrderNumber,
         reservationDate,
         productName,
@@ -118,7 +119,7 @@ const PaymentModal = ({ isOpen, onRequestClose, productDetails, productName, sta
       })) : [
       {
         productId: productDetails.productId,
-        userId: 'testuser001',
+        userId: user.userId, // 로그인한 사용자의 userId를 사용
         reservationNumber: createOrderNumber,
         reservationDate,
         productName,
@@ -139,7 +140,9 @@ const PaymentModal = ({ isOpen, onRequestClose, productDetails, productName, sta
       for (const data of paymentData) {
         const notified = await fetch(`${SERVER_BASE_URL}/payment/complete`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('ACCESS_TOKEN')}`
+           },
           credentials: 'include',
           body: JSON.stringify(data),
         });
@@ -156,8 +159,6 @@ const PaymentModal = ({ isOpen, onRequestClose, productDetails, productName, sta
     }
   }
   
-  
-
   const handleSubmit = (e) => {
     e.preventDefault();
 

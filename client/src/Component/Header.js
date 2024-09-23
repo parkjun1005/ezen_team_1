@@ -1,16 +1,16 @@
-import React, { useContext } from 'react';
-import { AuthContext } from './AuthContext';
-import './Header.css';
-import logo from '../assets/images/로고.png';
+import React from 'react';
+import { useAuth } from './AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
+import logo from '../assets/images/로고.png';
+import './Header.css';
 
 function Header() {
-  const { isAuthenticated, logout } = useContext(AuthContext);
+  const { user, logout, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
-    navigate('/login'); // 로그아웃 후 로그인 페이지로 이동
+    navigate('/login');
   };
 
   return (
@@ -28,7 +28,7 @@ function Header() {
                 <li><Link to="/Map">오시는길</Link></li>
               </ul>
             </li>
-            <li><Link to="/CampingRoom">공용시설</Link></li>
+            <li><Link to="/Community">공용시설</Link></li>
             <li>
               <a href="#">객실</a>
               <ul className="subnav">
