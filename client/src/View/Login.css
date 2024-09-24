@@ -1,0 +1,144 @@
+.Login {
+    text-align: center;
+    margin-top: 200px;
+    margin-bottom: 340px;
+}
+
+
+.login_logo p {
+    margin: 0;
+}
+
+.input_box {
+    box-sizing: border-box;
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+
+
+.input_box .Lock_user{
+position: relative;
+display: inline-block;
+right: 162px;
+top: 20px;
+height: 20px;
+color: #191919b8;
+}
+
+
+.input_box .Lock_key {
+    position: relative;
+    display: inline-block;
+    right: 162px;
+    color: #191919bd;
+    font-size: 20px;
+    height: 20px;
+    top: 20px;
+}
+
+
+.input_wrap {
+    border: none;
+    border-bottom: 1px solid #e3e3e3;
+    display: flex;
+    align-items: center;
+    margin: auto;
+    margin-bottom: 20px;
+    width: 350px;
+    padding: 0 30px;
+    font-size: 14px;
+}
+
+.input_wrap:hover {
+    border-bottom: 1px solid #191919;
+}
+
+.input_wrap:focus {
+    outline: none;
+    border-bottom: 1px solid #191919;
+}
+
+
+.but_area {
+    margin-top: 30px;
+}
+
+
+.Login_but {
+    background-color: #95826e;
+    color: #fff;
+    border: none;
+    width: 350px;
+    height: 50px;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.9px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+.Login_but:hover {
+    background-color: #796a59ee;
+}
+
+
+#sns:hover {
+    background-color: #f0d804;
+}
+
+
+
+.sns_kakao{
+    background-color: #ffde00;;
+    color: #191919;
+}
+
+.sns_kakao {
+    width: 350px;
+    height: 50px;
+    border-radius: 5px;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: -.16px;
+    align-items: center;
+    position: relative;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    border: none;
+    cursor: pointer;
+}
+
+.social {
+    height: 24px;
+    left: 15px;
+    position: absolute;
+    top: 13px;
+    width: 24px;
+}
+
+.look_for {
+    display: flex;
+    letter-spacing: 2px;
+    justify-content:center;
+    font-size: 12px;
+    margin-top: 10px;
+    text-decoration: none;
+}
+
+.link_wrap{
+    text-decoration: none;
+    color: #191919;
+}
+
+.look_for .stick {
+    color: #19191931;
+}
+
+
+.look_for .new_user {
+    font-weight: 700;
+}

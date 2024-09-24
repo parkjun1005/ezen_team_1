@@ -1,0 +1,97 @@
+
+.consent {
+    margin-top: 300px;
+    margin-bottom: 230px;
+}
+
+
+
+.consent_title {
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.all_consent {
+    align-items: center;
+    background: #e3e3e3db;
+    border-radius: 5px;
+    display: flex;
+    height: 52px;
+    padding-left: 15px;
+    width: 400px;
+    margin: auto;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: .8px;
+    
+}
+
+.all_consent label {
+    display: flex;
+    cursor: pointer;
+    justify-content: flex-start;
+}
+
+.all_consent span {
+    color: #999999f4;
+    font-size: 12px;
+}
+
+.consent_item {
+    align-items: center;
+    display: flex;
+    height: 50px;
+    justify-content: space-between;
+    padding-left: 20px;
+    width: 396px;
+    margin: auto;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.consent_item label {
+    display: flex;
+    cursor: pointer;
+    justify-content: flex-start;
+    
+}
+
+.consent_item .next {
+    border: none;
+    background-color: #fff;
+    margin-bottom: -3px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+
+.next_but {
+    background-color: #95826e;
+    color: #fff;
+    border: none;
+    width: 400px;
+    height: 60px;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.9px;
+    margin: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.next_but:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+
+
+.consent_but {
+    text-align: center;
+}
+
+.consent [type=checkbox] {
+    width: 18px;
+}
