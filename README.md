@@ -2,6 +2,11 @@
 
 
 
+<div align= "center">
+<img src="https://github.com/user-attachments/assets/95596320-c935-4717-9f26-6fc39561d593"/ width= 800>
+</div>
+
+
 ## 멤버
  박준(팀장)        김지홍           윤진서               편무빈                조혜린       
 
